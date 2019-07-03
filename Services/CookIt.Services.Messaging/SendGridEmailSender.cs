@@ -9,6 +9,7 @@
     using CookIt.Services.Messaging.SendGrid;
 
     using Microsoft.AspNetCore.Identity.UI.Services;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
     using Newtonsoft.Json;
@@ -22,11 +23,16 @@
 
         private readonly string fromAddress;
         private readonly string fromName;
+        private readonly IConfiguration config;
         private readonly HttpClient httpClient;
         private readonly ILogger logger;
 
-        public SendGridEmailSender(ILoggerFactory loggerFactory, string apiKey, string fromAddress, string fromName)
+        public SendGridEmailSender(ILoggerFactory loggerFactory, IConfiguration configuration)
         {
+            string apiKey = this.config["SendGrid:API_KEY"];
+            string fromAddress = this.config["SendGrid:SenderAddress"];
+            string fromName = this.config["SendGrid:SenderName"];
+
             if (loggerFactory == null)
             {
                 throw new ArgumentNullException(nameof(loggerFactory));
@@ -54,6 +60,7 @@
             this.httpClient.BaseAddress = new Uri(BaseUrl);
             this.fromAddress = fromAddress;
             this.fromName = fromName;
+            this.config = configuration;
         }
 
         public async Task SendEmailAsync(string email, string subject, string message)
