@@ -3,18 +3,96 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/fav-icon.png" type="image/x-icon" />
     <title>@this.ViewData["Title"] - CookIt</title>
 
     <environment names="Development">
-        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/font-awesome.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/vendors/line-icon/css/simple-line-icons.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/vendors/elegant-icon/style.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/style.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/responsive.css" rel="stylesheet" asp-append-version="true">
     </environment>
     <environment names="Staging,Production">
-        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/font-awesome.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/vendors/line-icon/css/simple-line-icons.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/vendors/elegant-icon/style.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/style.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/responsive.css" rel="stylesheet" asp-append-version="true">
     </environment>
 </head>
 <body>
+    <div class="header_top_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="top_header_left">
+                        <div class="input-group mt-5">
+                            <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary" type="button"><i class="icon-magnifier"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="top_header_middle">
+                        <a href="#"><i class="fa fa-phone"></i> Call Us: <span>+84 987 654 321</span></a>
+                        <a href="#"><i class="fa fa-envelope"></i> Email: <span>support@yourdomain.com</span></a>
+                        <img src="~/img/logo.png" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="top_right_header">
+                        <ul class="header_social">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+                        </ul>
+                        <ul class="top_right">
+                            <li class="user"><a href="#"><i class="icon-user icons"></i></a></li>
+                            <li class="cart"><a href="#"><i class="icon-handbag icons"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="shop_header_area">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-collapse collapse">
+                <div class="navbar-collapse collapse d-lg-inline-flex" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link"  asp-area="" asp-controller="Home" asp-action="Index">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link"  asp-area="" asp-controller="Home" asp-action="Index">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link"  asp-area="" asp-controller="Home" asp-action="Index">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link"  asp-area="" asp-controller="Home" asp-action="Index">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link"  asp-area="" asp-controller="Home" asp-action="Index">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto mr-5">
+                        <li class="nav-item"><a class="nav-link" href="/Identity/Account/Login">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Identity/Account/Register">Register</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container ">
+        <partial name="_CookieConsentPartial" />
+        <div class="d-flex justify-content-center mt-3 mb-3">
+            <div class="body-content">
+                @this.RenderBody()
+            </div>
+        </div>
+    </div>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -40,32 +118,101 @@
             </div>
         </nav>
     </header>
-    
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @this.RenderBody()
-        </main>
-    </div>
-    
-    <footer class="border-top footer text-muted">
+
+
+    <footer class="footer_area">
         <div class="container">
-            &copy; @DateTime.Now.Year - CookIt - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="footer_widgets">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-6">
+                        <aside class="f_widget f_about_widget">
+                            <img src="img/logo.png" alt="">
+                            <p>Persuit is a Premium PSD Template. Best choice for your online store. Let purchase it to enjoy now</p>
+                        </aside>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <aside class="f_widget link_widget f_info_widget">
+                            <div class="f_w_title">
+                                <h3>Information</h3>
+                            </div>
+                            <ul>
+                                <li><a href="#">About us</a></li>
+                                <li><a href="#">Delivery information</a></li>
+                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Returns & Refunds</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <aside class="f_widget link_widget f_service_widget">
+                            <div class="f_w_title">
+                                <h3>Customer Service</h3>
+                            </div>
+                            <ul>
+                                <li><a href="#">My account</a></li>
+                                <li><a href="#">Ordr History</a></li>
+                                <li><a href="#">Wish List</a></li>
+                                <li><a href="#">Newsletter</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <aside class="f_widget link_widget f_extra_widget">
+                            <div class="f_w_title">
+                                <h3>Extras</h3>
+                            </div>
+                            <ul>
+                                <li><a href="#">Brands</a></li>
+                                <li><a href="#">Gift Vouchers</a></li>
+                                <li><a href="#">Affiliates</a></li>
+                                <li><a href="#">Specials</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <aside class="f_widget link_widget f_account_widget">
+                            <div class="f_w_title">
+                                <h3>My Account</h3>
+                            </div>
+                            <ul>
+                                <li><a href="#">My account</a></li>
+                                <li><a href="#">Ordr History</a></li>
+                                <li><a href="#">Wish List</a></li>
+                                <li><a href="#">Newsletter</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+            <div class="footer_copyright">
+                <h5>
+                    ©
+                    <script>document.write(new Date().getFullYear());</script>
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> All rights reserved | CookIt
+                </h5>
+            </div>
         </div>
     </footer>
 
     <environment names="Development">
+        <script src="~/js/jquery-3.2.1.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
+        <script src="~/js/popper.min.js" asp-append-version="true"></script>
+        <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
+        <script src="~/js/jquery-3.2.1.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/js/popper.min.js" asp-append-version="true"></script>
+        <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 

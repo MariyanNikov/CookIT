@@ -29,6 +29,7 @@
 
         public SendGridEmailSender(ILoggerFactory loggerFactory, IConfiguration configuration)
         {
+            this.config = configuration;
             string apiKey = this.config["SendGrid:API_KEY"];
             string fromAddress = this.config["SendGrid:SenderAddress"];
             string fromName = this.config["SendGrid:SenderName"];
