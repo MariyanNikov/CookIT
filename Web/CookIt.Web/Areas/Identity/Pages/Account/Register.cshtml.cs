@@ -51,6 +51,7 @@
             if (this.ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = this.Input.Email, Email = this.Input.Email, LastName = this.Input.LastName, FirstName = this.Input.FirstName };
+                user.Claims.Add(new IdentityUserClaim<string> { ClaimType = "FullName", ClaimValue = $"{user.FirstName} {user.LastName}" });
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {
@@ -63,11 +64,10 @@
                         values: new { userId = user.Id, code },
                         protocol: this.Request.Scheme);
 
-                    await this.emailSender.SendEmailAsync(
-                        this.Input.Email,
-                        "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+                    // await this.emailSender.SendEmailAsync(
+                    //    this.Input.Email,
+                    //    "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                     await this.signInManager.SignInAsync(user, isPersistent: false);
                     return this.LocalRedirect(returnUrl);
                 }

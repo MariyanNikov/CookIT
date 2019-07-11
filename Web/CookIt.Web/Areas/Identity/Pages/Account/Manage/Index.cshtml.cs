@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
+    using System.Linq;
 
     using CookIt.Data.Models;
 
@@ -58,6 +59,8 @@
             {
                 Email = email,
                 PhoneNumber = phoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
             };
 
             this.IsEmailConfirmed = await this.userManager.IsEmailConfirmedAsync(user);
@@ -100,6 +103,24 @@
                 }
             }
 
+            if (this.Input.FirstName != user.FirstName || this.Input.LastName != user.LastName)
+            {
+                user.FirstName = this.Input.FirstName;
+                user.LastName = this.Input.LastName;
+
+                var currentClaim = this.userManager.GetClaimsAsync(user).GetAwaiter().GetResult().FirstOrDefault(x => x.Type == "FullName");
+                var removeCurrentClaim = await this.userManager.RemoveClaimAsync(user, currentClaim);
+
+                user.Claims.Add(new IdentityUserClaim<string> { ClaimType = "FullName", ClaimValue = $"{user.FirstName} {user.LastName}" });
+                var updateUser = await this.userManager.UpdateAsync(user);
+
+                if (!updateUser.Succeeded)
+                {
+                    var userId = await this.userManager.GetUserIdAsync(user);
+                    throw new InvalidOperationException($"Unexpected error occurred updating user with ID '{userId}'.");
+                }
+            }
+
             await this.signInManager.RefreshSignInAsync(user);
             this.StatusMessage = "Your profile has been updated";
             return this.RedirectToPage();
@@ -124,7 +145,7 @@
             var callbackUrl = this.Url.Page(
                 "/Account/ConfirmEmail",
                 pageHandler: null,
-                values: new { userId = userId, code = code },
+                values: new { userId, code },
                 protocol: this.Request.Scheme);
             await this.emailSender.SendEmailAsync(
                 email,
@@ -144,6 +165,17 @@
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [Display(Name = "First name")]
+            [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last name")]
+            [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            public string LastName { get; set; }
+
         }
     }
 }

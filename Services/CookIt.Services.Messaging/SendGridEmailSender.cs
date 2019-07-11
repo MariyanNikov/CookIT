@@ -21,6 +21,7 @@
         private const string BaseUrl = "https://api.sendgrid.com/v3/";
         private const string SendEmailUrlPath = "mail/send";
 
+        private readonly string apiKey;
         private readonly string fromAddress;
         private readonly string fromName;
         private readonly IConfiguration config;
@@ -30,38 +31,35 @@
         public SendGridEmailSender(ILoggerFactory loggerFactory, IConfiguration configuration)
         {
             this.config = configuration;
-            string apiKey = this.config["SendGrid:API_KEY"];
-            string fromAddress = this.config["SendGrid:SenderAddress"];
-            string fromName = this.config["SendGrid:SenderName"];
+            this.apiKey = this.config["SendGrid:API_KEY"];
+            this.fromAddress = this.config["SendGrid:SenderAddress"];
+            this.fromName = this.config["SendGrid:SenderName"];
 
             if (loggerFactory == null)
             {
                 throw new ArgumentNullException(nameof(loggerFactory));
             }
 
-            if (string.IsNullOrWhiteSpace(apiKey))
+            if (string.IsNullOrWhiteSpace(this.apiKey))
             {
-                throw new ArgumentOutOfRangeException(nameof(apiKey));
+                throw new ArgumentOutOfRangeException(nameof(this.apiKey));
             }
 
-            if (string.IsNullOrWhiteSpace(fromAddress))
+            if (string.IsNullOrWhiteSpace(this.fromAddress))
             {
-                throw new ArgumentOutOfRangeException(nameof(fromAddress));
+                throw new ArgumentOutOfRangeException(nameof(this.fromAddress));
             }
 
-            if (string.IsNullOrWhiteSpace(fromName))
+            if (string.IsNullOrWhiteSpace(this.fromName))
             {
-                throw new ArgumentOutOfRangeException(nameof(fromName));
+                throw new ArgumentOutOfRangeException(nameof(this.fromName));
             }
 
             this.logger = loggerFactory.CreateLogger<SendGridEmailSender>();
             this.httpClient = new HttpClient();
             this.httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue(AuthenticationScheme, apiKey);
+                new AuthenticationHeaderValue(AuthenticationScheme, this.apiKey);
             this.httpClient.BaseAddress = new Uri(BaseUrl);
-            this.fromAddress = fromAddress;
-            this.fromName = fromName;
-            this.config = configuration;
         }
 
         public async Task SendEmailAsync(string email, string subject, string message)
