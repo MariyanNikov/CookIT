@@ -33,5 +33,10 @@ namespace CookIt.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        // Personal Info
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
     }
 }
