@@ -38,4 +38,10 @@
     <ProjectReference Include="..\CookIt.Web.Infrastructure\CookIt.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\CookIt.Web.ViewModels\CookIt.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Areas\Identity\Pages\Account\Manage\Index.cshtml.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
 </Project>

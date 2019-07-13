@@ -11,6 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190711235558_ExtendedApplicationUser_AddedAddresses.cs" />
+    <Compile Remove="Migrations\20190711235558_ExtendedApplicationUser_AddedAddresses.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
 

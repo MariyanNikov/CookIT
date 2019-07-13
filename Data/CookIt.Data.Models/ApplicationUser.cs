@@ -16,6 +16,7 @@ namespace CookIt.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Addresses = new HashSet<Addresses>();
         }
 
         // Audit info
@@ -38,5 +39,7 @@ namespace CookIt.Data.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public virtual ICollection<Addresses> Addresses { get; set; }
     }
 }

@@ -21,6 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\CookIt.Data.Common\CookIt.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\CookIt.Data.Models\CookIt.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\CookIt.Web.Infrastructure\CookIt.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Web\CookIt.Web.ViewModels\CookIt.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

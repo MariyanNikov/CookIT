@@ -9,6 +9,7 @@
     using CookIt.Data.Repositories;
     using CookIt.Data.Seeding;
     using CookIt.Services.Data;
+    using CookIt.Services.Data.ApplicationUser;
     using CookIt.Services.Mapping;
     using CookIt.Services.Messaging;
     using CookIt.Web.ViewModels;
@@ -100,6 +101,7 @@
 
             // services.AddTransient<ISmsSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IApplicationUserService, ApplicationUserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

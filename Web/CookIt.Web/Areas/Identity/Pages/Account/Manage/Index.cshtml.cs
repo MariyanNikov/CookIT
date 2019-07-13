@@ -2,9 +2,9 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
-    using System.Linq;
 
     using CookIt.Data.Models;
 
@@ -175,7 +175,6 @@
             [Display(Name = "Last name")]
             [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             public string LastName { get; set; }
-
         }
     }
 }
