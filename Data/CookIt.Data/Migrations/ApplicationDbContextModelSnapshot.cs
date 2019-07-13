@@ -19,13 +19,11 @@ namespace CookIt.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CookIt.Data.Models.Addresses", b =>
+            modelBuilder.Entity("CookIt.Data.Models.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address");
 
                     b.Property<string>("ApplicationUserId");
 
@@ -38,6 +36,8 @@ namespace CookIt.Data.Migrations
                     b.Property<string>("Description");
 
                     b.Property<DateTime?>("ModifiedOn");
+
+                    b.Property<string>("StreetAddress");
 
                     b.HasKey("Id");
 
@@ -256,7 +256,7 @@ namespace CookIt.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("CookIt.Data.Models.Addresses", b =>
+            modelBuilder.Entity("CookIt.Data.Models.Address", b =>
                 {
                     b.HasOne("CookIt.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Addresses")

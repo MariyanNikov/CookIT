@@ -3,11 +3,11 @@
     using CookIt.Data.Models;
     using CookIt.Services.Mapping;
 
-    public class AddressViewModel : IMapFrom<Addresses>
+    public class AddressViewModel : IMapFrom<Address>
     {
         public int Id { get; set; }
 
-        public string Address { get; set; }
+        public string StreetAddress { get; set; }
 
         public string Description { get; set; }
 

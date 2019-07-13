@@ -12,9 +12,9 @@
     public class ApplicationUserService : IApplicationUserService
     {
         private readonly IRepository<ApplicationUser> userRepository;
-        private readonly IRepository<Addresses> addressesRepository;
+        private readonly IRepository<Address> addressesRepository;
 
-        public ApplicationUserService(IRepository<ApplicationUser> userRepository, IRepository<Addresses> addressesRepository)
+        public ApplicationUserService(IRepository<ApplicationUser> userRepository, IRepository<Address> addressesRepository)
         {
             this.userRepository = userRepository;
             this.addressesRepository = addressesRepository;
@@ -22,7 +22,7 @@
 
         public async Task AddAddress<TModel>(TModel addressBindingModel, string userId)
         {
-            var address = Mapper.Map<Addresses>(addressBindingModel);
+            var address = Mapper.Map<Address>(addressBindingModel);
 
             var user = this.userRepository.All().SingleOrDefault(x => x.Id == userId);
             user.Addresses.Add(address);

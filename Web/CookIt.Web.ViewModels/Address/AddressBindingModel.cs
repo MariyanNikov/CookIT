@@ -5,12 +5,12 @@
     using CookIt.Data.Models;
     using CookIt.Services.Mapping;
 
-    public class AddressBindingModel : IMapTo<Addresses>
+    public class AddressBindingModel : IMapTo<Address>
     {
         [Required]
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
-        [Display(Name = "Address")]
-        public string Address { get; set; }
+        [Display(Name = "Street Address")]
+        public string StreetAddress { get; set; }
 
         public string Description { get; set; }
 

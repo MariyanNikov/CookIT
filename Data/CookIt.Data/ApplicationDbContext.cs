@@ -26,7 +26,7 @@
 
         public DbSet<Setting> Settings { get; set; }
 
-        public DbSet<Addresses> Addresses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
