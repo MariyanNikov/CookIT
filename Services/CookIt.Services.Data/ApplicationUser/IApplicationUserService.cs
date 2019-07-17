@@ -10,5 +10,7 @@
         IEnumerable<TModel> GetAllAddresses<TModel>(string userId);
 
         Task RemoveAddressById(int addressId);
+
+        Task<IEnumerable<TModel>> GetUsersByRoleName<TModel>(string roleName);
     }
 }

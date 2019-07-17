@@ -4,10 +4,10 @@
     ViewData["Title"] = "Register";
 }
     <div class="d-flex justify-content-center">
-        <form class="text-center border  border-danger p-5 w-50 rounded" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <form class="text-center border  border-info p-5 w-auto rounded" asp-route-returnUrl="@Model.ReturnUrl" method="post">
 
             <p class="h4 mb-4">Register</p>
-            <hr class="bg-danger" />
+            <hr class="bg-info" />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-row mb-4 my-4">
                 <div class="col">
@@ -34,10 +34,10 @@
             <input type="password" class="form-control mb-4" placeholder="Confirm Password" aria-describedby="defaultRegisterFormConfirmPasswordHelpBlock" asp-for="Input.ConfirmPassword">
             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
 
-            <hr class="bg-danger" />
+            <hr class="bg-info" />
 
             <!-- Sign up button -->
-            <button class="btn btn-danger btn-block" type="submit">Register</button>
+            <button class="btn btn-info btn-block" type="submit">Register</button>
 
         </form>
 

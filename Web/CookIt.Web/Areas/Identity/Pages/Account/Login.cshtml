@@ -5,10 +5,10 @@
     ViewData["Title"] = "Log in";
 }
 <div class="d-flex justify-content-center">
-    <form class="text-center border  border-danger p-5 w-50 rounded" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <form class="text-center border  border-info p-5 w-auto rounded" asp-route-returnUrl="@Model.ReturnUrl" method="post">
 
         <p class="h4 mb-4">Login</p>
-        <hr class="bg-danger" />
+        <hr class="bg-info" />
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <!-- E-mail -->
@@ -31,10 +31,10 @@
             </div>
         </div>
 
-        <hr class="bg-danger" />
+        <hr class="bg-info" />
 
         <!-- Sign up button -->
-        <button class="btn btn-danger btn-block" type="submit">Login</button>
+        <button class="btn btn-info btn-block" type="submit">Login</button>
 
     </form>
 </div>

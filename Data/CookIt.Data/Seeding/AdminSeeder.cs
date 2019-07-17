@@ -24,7 +24,6 @@
 
         private static async Task SeedRootAdminAsync(UserManager<ApplicationUser> userManager, string adminName, string password)
         {
-
             var user = userManager.FindByEmailAsync($"{adminName}@{adminName}.com");
             if (user == null)
             {
@@ -53,7 +52,6 @@
                     throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
                 }
             }
-
         }
     }
 }

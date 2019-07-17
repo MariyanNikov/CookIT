@@ -1,0 +1,63 @@
+﻿@model List<CookIt.Web.ViewModels.Administration.AdminViewModel>
+@{
+    this.ViewData["Title"] = "Admins";
+
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="d-flex justify-content-center">
+            <p class="h4 mb-4">Admins</p>
+        </div>
+        <table class="table table-bordered border-info">
+            <partial name="_StatusMessage" for="@this.TempData["StatusMessage"]" />
+            <thead class="border-danger">
+                <tr>
+                    <th scope="auto">#</th>
+                    <th scope="auto">Email</th>
+                    <th scope="auto">Full Name</th>
+                    <th scope="auto">Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <th scope="row">@(i + 1)</th>
+                        <td>@Model[i].Email</td>
+                        <td>@Model[i].FullName</td>
+                        <td>
+                            <form asp-area="Administration" asp-controller="Users" asp-action="RemoveAdmin" asp-route-id="@Model[i].Id" method="post">
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="close" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-6">
+        <form class="text-center w-auto rounded" method="post">
+
+            <p class="h4 mb-4">Make Admin</p>
+            <hr class="bg-info" />
+
+            <!-- E-mail -->
+            <div asp-validation-summary="All" class="text-danger pb-1"></div>
+            <input type="email" class="form-control mb-4" placeholder="E-mail" name="email">
+            <span name="email" class="text-danger"></span>
+
+
+            <hr class="bg-info" />
+
+            <button class="btn btn-info btn-block" type="submit">Make Admin</button>
+
+        </form>
+
+    </div>
+</div>
