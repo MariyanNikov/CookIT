@@ -28,6 +28,10 @@
 
         public DbSet<Address> Addresses { get; set; }
 
+        public DbSet<Ingredient> Ingredients { get; set; }
+
+        public DbSet<IngredientType> IngredientTypes { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

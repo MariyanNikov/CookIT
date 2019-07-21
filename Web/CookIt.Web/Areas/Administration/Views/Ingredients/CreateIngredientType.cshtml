@@ -1,0 +1,21 @@
+﻿@model  CookIt.Web.ViewModels.Ingridient.IngredientTypeBindingModel
+@{
+    this.ViewData["Title"] = "Create Ingredient Type";
+
+}
+<div class="d-flex justify-content-center">
+    <form class="text-center w-50 rounded" method="post">
+
+        <p class="h4 mb-4">Create Ingredient Type</p>
+        <div asp-validation-summary="ModelOnly" class="text-danger pb-1"></div>
+        <hr class="bg-info" />
+
+        <input type="text" class="form-control mb-4" placeholder="Ingredient Type Name" asp-for="Name">
+        <span asp-validation-for="Name" class="text-danger"></span>
+
+        <hr class="bg-info" />
+
+        <button class="btn btn-info btn-block" type="submit">Create</button>
+
+    </form>
+</div>

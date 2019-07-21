@@ -1,0 +1,50 @@
+﻿@model List<CookIt.Web.ViewModels.Ingridient.AllIngredientTypeViewModel>
+@{
+    this.ViewData["Title"] = "All Ingredient Types";
+}
+<h4 class="d-flex justify-content-center">All Ingredient Types:</h4>
+
+
+    @if (Model.Count == 0)
+    {
+        <div class="col-md-12 pt-2">
+            <div class="alert alert-dark" role="alert">
+                There are no ingredient types added.
+            </div>
+        </div>
+    }
+    else
+    {
+<div class="d-flex justify-content-center">
+    <div class="col-md-8 pt-2">
+        <partial name="_StatusMessage" for="@this.TempData["StatusMessage"]" />
+        <div class="table-responsive">
+            <table class="table table-bordered border-info">
+                <thead class="border-danger">
+                    <tr>
+                        <th scope="auto">#</th>
+                        <th scope="auto">Name</th>
+                        <th scope="auto">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <th scope="row">@(i + 1)</th>
+                            <td>@Model[i].Name</td>
+                            <td>
+                                <form method="post">
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-danger fa" asp-controller="Ingredients" asp-action="RemoveIngredientType" asp-route-id="@Model[i].Id">Remove <i class="fa fa-close"></i></button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    }

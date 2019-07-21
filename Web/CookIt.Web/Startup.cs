@@ -12,6 +12,7 @@
     using CookIt.Services.Data.ApplicationUser;
     using CookIt.Services.Mapping;
     using CookIt.Services.Messaging;
+    using CookIt.Web.Infrastructure.ViewComponents;
     using CookIt.Web.ViewModels;
 
     using Microsoft.AspNetCore.Builder;
@@ -21,9 +22,11 @@
     using Microsoft.AspNetCore.Identity.UI;
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Razor;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.FileProviders;
     using Microsoft.Extensions.Logging;
 
     public class Startup
@@ -42,6 +45,15 @@
             // TODO: Add pooling when this bug is fixed: https://github.com/aspnet/EntityFrameworkCore/issues/9741
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
+
+            var viewComponentsAssemby = typeof(IngredientTypesViewComponent).Assembly;
+
+            services.AddMvc().AddApplicationPart(viewComponentsAssemby);
+
+            services.Configure<RazorViewEngineOptions>(options =>
+            {
+                options.FileProviders.Add(new EmbeddedFileProvider(viewComponentsAssemby, "ComponentLib"));
+            });
 
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -102,6 +114,7 @@
             // services.AddTransient<ISmsSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
+            services.AddTransient<IIngredientService, IngredientService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

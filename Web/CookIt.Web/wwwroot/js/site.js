@@ -27,5 +27,20 @@ $(function () {
         };
     }
 
+
     var accordion = new Accordion($('#accordion'), false);
+
 });
+
+
+$(function () {
+    var url = window.location.pathname;
+
+    $('#accordion a').each(function () {
+        var myHref = $(this).attr('href');
+        if (url.match(myHref)) {
+            $(this).addClass('activeClassNameForCSSHighlight')
+            $(this).closest('ul').show();
+        }
+    });
+})

@@ -29,9 +29,8 @@
                         <td>
                             <form asp-area="Administration" asp-controller="Users" asp-action="RemoveAdmin" asp-route-id="@Model[i].Id" method="post">
                                 <div class="d-flex justify-content-center">
-                                    <button type="submit" class="close" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+
+                                    <button type="submit" class="btn btn-danger fa">Remove <i class="fa fa-close"></i></button>
                                 </div>
                             </form>
                         </td>

@@ -1,0 +1,6 @@
+﻿@model List<CookIt.Web.ViewModels.Ingridient.AllIngredientTypeViewModel>
+
+@foreach (var ingredientType in Model)
+{
+    <option value="@ingredientType.Id">@ingredientType.Name</option>
+}
