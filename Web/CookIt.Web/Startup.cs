@@ -1,13 +1,14 @@
 ﻿namespace CookIt.Web
 {
     using System.Reflection;
-
+    using CloudinaryDotNet;
     using CookIt.Data;
     using CookIt.Data.Common;
     using CookIt.Data.Common.Repositories;
     using CookIt.Data.Models;
     using CookIt.Data.Repositories;
     using CookIt.Data.Seeding;
+    using CookIt.Services;
     using CookIt.Services.Data;
     using CookIt.Services.Data.ApplicationUser;
     using CookIt.Services.Mapping;
@@ -46,6 +47,7 @@
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
+            // View Components from another assembly configuration
             var viewComponentsAssemby = typeof(IngredientTypesViewComponent).Assembly;
 
             services.AddMvc().AddApplicationPart(viewComponentsAssemby);
@@ -54,6 +56,19 @@
             {
                 options.FileProviders.Add(new EmbeddedFileProvider(viewComponentsAssemby, "ComponentLib"));
             });
+
+            // Cloudinary configuration
+            Account cloudinaryCredentials = new Account
+            {
+                Cloud = this.configuration["Cloudinary:CloudName"],
+                ApiKey = this.configuration["Cloudinary:API_KEY"],
+                ApiSecret = this.configuration["Cloudinary:API_SECRET"],
+            };
+
+            Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
+
+            services.AddSingleton(cloudinaryUtility);
+            
 
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -115,6 +130,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
             services.AddTransient<IIngredientService, IngredientService>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
