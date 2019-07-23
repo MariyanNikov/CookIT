@@ -94,7 +94,6 @@
                 return this.View(ingredientModel);
             }
 
-
             await this.ingredientService.CreateIngredient<IngredientBindingModel>(ingredientModel);
 
             this.TempData["StatusMessage"] = string.Format(SuccessMessageCreateIngredient, ingredientModel.Name);

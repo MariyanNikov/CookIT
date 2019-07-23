@@ -17,6 +17,8 @@
     <Compile Remove="Migrations\20190712000806_ExtendedApplicationUser_AddedAddresses.Designer.cs" />
     <Compile Remove="Migrations\20190720164527_Added_Ingredient_And_IngredientType.cs" />
     <Compile Remove="Migrations\20190720164527_Added_Ingredient_And_IngredientType.Designer.cs" />
+    <Compile Remove="Migrations\20190723171147_Added_Recipes_And_Mapping_Table_For_RecipesIngredients.cs" />
+    <Compile Remove="Migrations\20190723171147_Added_Recipes_And_Mapping_Table_For_RecipesIngredients.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

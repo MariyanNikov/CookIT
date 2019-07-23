@@ -4,18 +4,22 @@
 
     using CookIt.Data.Common.Models;
 
-    public class Ingredient : BaseModel<int>
+    public class Recipe : BaseModel<int>
     {
-        public Ingredient()
+        public Recipe()
         {
             this.RecipeIngredients = new HashSet<RecipeIngredient>();
         }
 
         public string Name { get; set; }
 
-        public int IngredientTypeId { get; set; }
+        public string Description { get; set; }
 
-        public IngredientType IngredientType { get; set; }
+        public int Portions { get; set; }
+
+        public string RecipeInstructions { get; set; }
+
+        public string Image { get; set; }
 
         public ICollection<RecipeIngredient> RecipeIngredients { get; set; }
     }

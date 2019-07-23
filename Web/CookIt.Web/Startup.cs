@@ -1,6 +1,7 @@
 ﻿namespace CookIt.Web
 {
     using System.Reflection;
+
     using CloudinaryDotNet;
     using CookIt.Data;
     using CookIt.Data.Common;
@@ -64,11 +65,8 @@
                 ApiKey = this.configuration["Cloudinary:API_KEY"],
                 ApiSecret = this.configuration["Cloudinary:API_SECRET"],
             };
-
             Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
-
             services.AddSingleton(cloudinaryUtility);
-            
 
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>(options =>
