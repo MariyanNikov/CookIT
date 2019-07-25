@@ -44,3 +44,97 @@ $(function () {
         }
     });
 })
+
+let disableButtons = function () {
+    let numberOfIngredients = $('#numberOfIngredients').val();
+
+
+    for (var i = 0; i < numberOfIngredients; i++) {
+        let weightId = `ingredientsWeight${i}`;
+        let countId = `ingredientsCount${i}`;
+        $(`#ingredientsCount${i}`).on('propertychange input', function (e) {
+            document.getElementById(weightId).disabled = this.value != ""
+        });
+        $(`#ingredientsWeight${i}`).on('propertychange input', function (e) {
+            document.getElementById(countId).disabled = this.value != ""
+        });
+    }
+
+
+        //$('#ingredientsCount').on('propertychange input', function (e) {
+        //    document.getElementById("ingredientsWeight").disabled = this.value != ""
+        //});
+        //$('#ingredientsWeight').on('propertychange input', function (e) {
+        //    document.getElementById("ingredientsCount").disabled = this.value != ""
+        //});
+    
+}
+
+
+$(function () {
+    $('#errorMessage').first().hide();
+   
+    disableButtons();
+
+    $('#addIngredient').click(function (event) {
+        event.preventDefault();
+
+        let numberOfIngredients = $('#numberOfIngredients').val();
+        if (numberOfIngredients >= 10) {
+
+            $('#errorMessage').first().show();
+            return;
+        }
+        $('#errorMessage').first().hide();
+        let container = $('#ingredientsContainer');
+
+        let ingredientRow = $('#ingredientRow').clone();
+        
+        
+        ingredientRow.children()[0].setAttribute("name", `InputModel.Ingredients[${numberOfIngredients}].IngredientId`);
+        //ingredientRow.children()[1].setAttribute('data-valmsg-for', `InputModel.Ingredients[${numberOfIngredients}].IngredientId`);
+        ingredientRow.children()[1].setAttribute("name", `InputModel.Ingredients[${numberOfIngredients}].Count`);
+        ingredientRow.children()[1].setAttribute("id", `ingredientsCount${numberOfIngredients}`);
+        //ingredientRow.children()[3].setAttribute('data-valmsg-for', `InputModel.Ingredients[${numberOfIngredients}].Count`);
+        ingredientRow.children()[2].setAttribute("name", `InputModel.Ingredients[${numberOfIngredients}].Weight`);
+        ingredientRow.children()[2].setAttribute("id", `ingredientsWeight${numberOfIngredients}`);
+        //ingredientRow.children()[5].setAttribute('data-valmsg-for', `InputModel.Ingredients[${numberOfIngredients}].Weight`);
+
+        
+
+        $('#numberOfIngredients').val(Number(numberOfIngredients) + 1);
+        container.append(ingredientRow);
+
+        $('#ingredientsContainer div:last-child :input').eq(0).val(0);
+        $('#ingredientsContainer div:last-child :input').eq(1).val('');
+        $('#ingredientsContainer div:last-child :input').last().val('');
+        $('#ingredientsContainer div:last-child :input').prop('disabled', false);
+
+        $(`#ingredientsCount${numberOfIngredients}`).on('propertychange input', function (e) {
+            document.getElementById(`ingredientsWeight${numberOfIngredients}`).disabled = this.value != ""
+        });
+        $(`#ingredientsWeight${numberOfIngredients}`).on('propertychange input', function (e) {
+            document.getElementById(`ingredientsCount${numberOfIngredients}`).disabled = this.value != ""
+        });
+
+
+    });
+
+    $('#removeIngredient').click(function (event) {
+        event.preventDefault();
+        let numberOfIngredients = $('#numberOfIngredients').val();
+        $('#errorMessage').first().hide();
+        if (numberOfIngredients <= 1) {
+            $('#errorMessage').first().show();
+            return;
+        }
+        let container = $('#ingredientsContainer div:last-child');
+
+        container.remove();
+
+        $('#numberOfIngredients').val(Number(numberOfIngredients) - 1);
+    });
+
+
+
+});

@@ -1,12 +1,12 @@
-﻿@{ 
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    
+
 <div class="row">
     <div class="col-md-3 d-flex">
         <ul id="accordion" class="accordion">
             <li>
-                <div class="link"><i class="fa fa-user"></i>Users<i class="fa fa-chevron-down"></i></div>
+                <div class="link"><i class="fa fa-users"></i>Users<i class="fa fa-chevron-down"></i></div>
                 <ul class="submenu">
                     <li><a id="link-a" href="/Administration/Users/Admins">Admins</a></li>
                     <li><a id="link-a" href="/Administration/Users/Couriers">Couriers</a></li>
@@ -17,15 +17,15 @@
                 <ul class="submenu">
                     <li><a id="link-a" href="/Administration/Ingredients/AllIngredientTypes">All Ingredient Types</a></li>
                     <li><a id="link-a" href="/Administration/Ingredients/CreateIngredientType">Create Ingredient Type</a></li>
-                    <li><a id="link-a"  href="/Administration/Ingredients/AllIngredients">All Ingredients</a></li>
+                    <li><a id="link-a" href="/Administration/Ingredients/AllIngredients">All Ingredients</a></li>
                     <li><a id="link-a" href="/Administration/Ingredients/CreateIngredient">Create Ingredient</a></li>
                 </ul>
             </li>
             <li>
-                <div class="link"><i class="fa fa-id-card"></i>Diseño responsive<i class="fa fa-chevron-down"></i></div>
+                <div class="link"><i class="fa fa-book"></i>Recipes<i class="fa fa-chevron-down"></i></div>
                 <ul class="submenu">
-                    <li><a href="#">Tablets</a></li>
-                    <li><a href="#">Dispositivos mobiles</a></li>
+                    <li><a id="link-a" href="/Administration/Recipes/AllRecipes">All Recipes</a></li>
+                    <li><a id="link-a" href="/Administration/Recipes/CreateRecipe">Create Recipe</a></li>
                     <li><a href="#">Medios de escritorio</a></li>
                     <li><a href="#">Otros dispositivos</a></li>
                 </ul>
@@ -45,3 +45,7 @@
         @RenderBody()
     </div>
 </div>
+
+@section Scripts{
+    @this.RenderSection("Scripts", required: false);
+}

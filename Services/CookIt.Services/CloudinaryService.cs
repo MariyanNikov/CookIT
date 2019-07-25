@@ -1,6 +1,5 @@
 ﻿namespace CookIt.Services
 {
-    using System;
     using System.IO;
     using System.Threading.Tasks;
 
@@ -17,7 +16,7 @@
             this.cloudinaryUtility = cloudinaryUtility;
         }
 
-        public async Task<string> UploadImageAsync(IFormFile imageFile)
+        public async Task<string> UploadImageAsync(IFormFile imageFile, string fileName)
         {
             byte[] destinationData;
 
@@ -31,7 +30,6 @@
 
             using (var ms = new MemoryStream(destinationData))
             {
-                var fileName = Guid.NewGuid().ToString();
                 ImageUploadParams uploadParams = new ImageUploadParams
                 {
                     Folder = "recipe_images",

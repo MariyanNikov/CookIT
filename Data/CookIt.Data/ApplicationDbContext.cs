@@ -86,6 +86,11 @@
             // RecipesIngredients Relations
             builder.Entity<RecipeIngredient>()
                 .HasKey(x => new { x.RecipeId, x.IngredientId });
+
+            // Recipe
+            builder.Entity<Recipe>()
+                .Property(x => x.RecipeInstructions)
+                .HasColumnType("text");
         }
 
         private static void ConfigureUserIdentityRelations(ModelBuilder builder)

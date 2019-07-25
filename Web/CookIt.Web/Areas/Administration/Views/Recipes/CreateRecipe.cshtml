@@ -1,0 +1,87 @@
+﻿@model CookIt.Web.ViewModels.Recipe.RecipeModel
+@{
+    this.ViewData["Title"] = "Create Recipe";
+    int numberOfIgredients = Model.InputModel?.Ingredients.Count ?? 1;
+}
+
+<div class="d-flex justify-content-center">
+    <form class="text-center w-100 rounded" method="post" enctype="multipart/form-data">
+
+        <p class="h4 mb-4">Create Recipe</p>
+        <div asp-validation-summary="All" class="text-danger pb-1"></div>
+        <hr class="bg-info" />
+
+        <div class="row ml-0">
+            <input type="text" class="form-control mb-4 w-50" placeholder="Name" asp-for="InputModel.Name">
+            <span asp-validation-for="InputModel.Name" class="text-danger"></span>
+
+            <input class="form-control mb-4 w-25 col align-self-end mr-3 ml-4" placeholder="Portions" asp-for="InputModel.Portions">
+            <span asp-validation-for="InputModel.Portions" class="text-danger"></span>
+
+        </div>
+
+        <input type="text" class="form-control mb-4" placeholder="Description" asp-for="InputModel.Description">
+        <span asp-validation-for="InputModel.Description" class="text-danger"></span>
+
+        <textarea class="form-control mb-4" placeholder="Recipe instructions..." asp-for="InputModel.RecipeInstructions"></textarea>
+        <span asp-validation-for="InputModel.RecipeInstructions" class="text-danger"></span>
+
+        <div class="text-md-left ml-1">
+            <label asp-for="InputModel.Image" class="text-primary h5">Recipe Picture</label>
+        </div>
+        <input type="file" class="form-control mb-4" placeholder="Image..." asp-for="InputModel.Image">
+        <span asp-validation-for="InputModel.Image" class="text-danger"></span>
+
+        <label class="text-primary h5"> Choose required ingredients: </label>
+        
+            <div id="errorMessage" class="alert alert-danger" role="alert">
+                The number of ingredients must be at least 1 and no more than 10.
+            </div>
+        
+            <div id="ingredientsContainer">
+                <div asp-validation-summary="ModelOnly" class="text-danger pb-1"></div>
+                <span id="validationIngredientsSelect" asp-validation-for="InputModel.Ingredients[0].IngredientId" class="text-danger"></span>
+                <span id="validationIngredientsCount" asp-validation-for="InputModel.Ingredients[0].Count" class="text-danger"></span>
+                <span id="validationIngredientsWeight" asp-validation-for="InputModel.Ingredients[0].Weight" class="text-danger"></span>
+                @for (int i = 0; i < numberOfIgredients; i++)
+                {
+            <div id="ingredientRow" class="row ml-0">
+                <select id="ingredientsSelect" type="text" class="form-control w-25 col align-self-start" asp-for="InputModel.Ingredients[i].IngredientId">
+                    <option selected disabled value="0">--- Select Ingredient Type ---</option>
+                    @for (int j = 0; j < Model.Ingredients.Count; j++)
+                    {
+                        <option value="@Model.Ingredients[j].Id">@Model.Ingredients[j].Name</option>
+                    }
+                </select>
+                @*<span id="validationIngredientsSelect" asp-validation-for="InputModel.Ingredients[i].IngredientId" class="text-danger"></span>*@
+                @{
+                        string ingredientsCountId = $"ingredientsCount{i}";
+                    <input id="@ingredientsCountId" class="form-control mb-4 w-25 col align-self-center ml-4" placeholder="Count" asp-for="InputModel.Ingredients[i].Count">
+                    @*<span id="validationIngredientsCount" asp-validation-for="InputModel.Ingredients[i].Count" class="text-danger"></span>*@
+
+
+                    string ingredientsWeightId = $"ingredientsWeight{i}";
+                    <input id="@ingredientsWeightId" type="number" class="form-control mb-4 w-25 col align-self-end ml-4 mr-3" placeholder="Weight (grams)" asp-for="InputModel.Ingredients[i].Weight">
+                }
+                @*<span id="validationIngredientsWeight" asp-validation-for="InputModel.Ingredients[i].Weight" class="text-danger"></span>*@
+
+            </div>
+                }
+
+
+            </div>
+        <div class="row d-flex justify-content-end mr-4">
+            <button id="addIngredient" class="btn btn-primary icon-plus"></button>
+            <button id="removeIngredient" class="btn btn-danger icon-minus ml-4"></button>
+        </div>
+        <input type="hidden" id="numberOfIngredients" name="numberOfIngredients" value="@numberOfIgredients">
+        <small id="createIngredientTypeLink" class="form-text text-muted d-flex justify-content-end">
+            <a class="pr-2" href="/Administration/Ingredients/CreateIngredient">Missing appropriate ingredient?</a>
+        </small>
+        <hr class="bg-info" />
+
+        <button class="btn btn-info btn-block" type="submit">Create</button>
+
+    </form>
+</div>
+
