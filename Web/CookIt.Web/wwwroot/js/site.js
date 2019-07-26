@@ -48,7 +48,6 @@ $(function () {
 let disableButtons = function () {
     let numberOfIngredients = $('#numberOfIngredients').val();
 
-
     for (var i = 0; i < numberOfIngredients; i++) {
         let weightId = `ingredientsWeight${i}`;
         let countId = `ingredientsCount${i}`;
@@ -58,16 +57,12 @@ let disableButtons = function () {
         $(`#ingredientsWeight${i}`).on('propertychange input', function (e) {
             document.getElementById(countId).disabled = this.value != ""
         });
+        if (document.getElementById(weightId).value != "") {
+            document.getElementById(countId).disabled = true;
+        } else if (document.getElementById(countId).value != "") {
+            document.getElementById(weightId).disabled = true;
+        }
     }
-
-
-        //$('#ingredientsCount').on('propertychange input', function (e) {
-        //    document.getElementById("ingredientsWeight").disabled = this.value != ""
-        //});
-        //$('#ingredientsWeight').on('propertychange input', function (e) {
-        //    document.getElementById("ingredientsCount").disabled = this.value != ""
-        //});
-    
 }
 
 
@@ -99,7 +94,6 @@ $(function () {
         ingredientRow.children()[2].setAttribute("name", `InputModel.Ingredients[${numberOfIngredients}].Weight`);
         ingredientRow.children()[2].setAttribute("id", `ingredientsWeight${numberOfIngredients}`);
         //ingredientRow.children()[5].setAttribute('data-valmsg-for', `InputModel.Ingredients[${numberOfIngredients}].Weight`);
-
         
 
         $('#numberOfIngredients').val(Number(numberOfIngredients) + 1);
@@ -116,7 +110,6 @@ $(function () {
         $(`#ingredientsWeight${numberOfIngredients}`).on('propertychange input', function (e) {
             document.getElementById(`ingredientsCount${numberOfIngredients}`).disabled = this.value != ""
         });
-
 
     });
 

@@ -129,6 +129,7 @@
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
             services.AddTransient<IIngredientService, IngredientService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
+            services.AddTransient<IRecipeService, RecipeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

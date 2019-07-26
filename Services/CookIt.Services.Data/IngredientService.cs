@@ -1,5 +1,6 @@
 ﻿namespace CookIt.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -126,6 +127,17 @@
             await this.ingredientTypeRepository.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<bool> CheckExistingIngredientId(ICollection<int> ingredientIds)
+        {
+            var ingredients = await this.ingredientRepository.All().Where(x => ingredientIds.Any(id => x.Id == id)).ToListAsync();
+            if (ingredientIds.Count == ingredients.Count)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

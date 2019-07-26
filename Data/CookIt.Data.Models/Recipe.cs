@@ -21,6 +21,8 @@
 
         public string Image { get; set; }
 
+        public decimal Price { get; set; }
+
         public ICollection<RecipeIngredient> RecipeIngredients { get; set; }
     }
 }

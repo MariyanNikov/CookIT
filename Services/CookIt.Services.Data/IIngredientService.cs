@@ -1,5 +1,6 @@
 ﻿namespace CookIt.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -27,5 +28,7 @@
         bool IngredientExistsByName(string name);
 
         Task<bool> RemoveIngredientById(int id);
+
+        Task<bool> CheckExistingIngredientId(ICollection<int> ingredientIds);
     }
 }
