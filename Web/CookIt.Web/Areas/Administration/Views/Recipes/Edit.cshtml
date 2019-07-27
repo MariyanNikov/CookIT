@@ -1,0 +1,104 @@
+﻿@model CookIt.Web.ViewModels.Recipe.RecipeEditBaseModel
+@{
+    ViewData["Title"] = "Edit Recipe";
+    int numberOfIgredients = Model.InputModel?.Ingredients.Count ?? 1;
+}
+<div class="d-flex justify-content-center">
+    <form class="text-center w-100 rounded" method="post" enctype="multipart/form-data">
+
+        <p class="h4 mb-4">Create Recipe</p>
+        <div asp-validation-summary="All" class="text-danger pb-1"></div>
+        <hr class="bg-info" />
+        <div class="row ml-0">
+            <span asp-validation-for="InputModel.Name" class="text-danger w-50"></span>
+            <span asp-validation-for="InputModel.Portions" class="text-danger w-25 col align-self-end mr-3 ml-4"></span>
+        </div>
+        <div class="row ml-0">
+            <input type="text" class="form-control mb-4 w-50" placeholder="Name" asp-for="InputModel.Name">
+            <input class="form-control mb-4 w-25 col align-self-end mr-3 ml-4" placeholder="Portions" asp-for="InputModel.Portions">
+        </div>
+
+        <div class="row ml-0 d-flex justify-content-center">
+            <span asp-validation-for="InputModel.Description" class="text-danger"></span>
+        </div>
+        <input type="text" class="form-control mb-4" placeholder="Description" asp-for="InputModel.Description">
+
+        <div class="row ml-0 d-flex justify-content-center">
+            <span asp-validation-for="InputModel.RecipeInstructions" class="text-danger"></span>
+        </div>
+        <textarea class="form-control mb-4" placeholder="Recipe instructions..." asp-for="InputModel.RecipeInstructions"></textarea>
+
+        <div class="text-md-left ml-1">
+            <label asp-for="InputModel.ImageUpload" class="text-primary h5">Picture</label>
+        </div>
+        <div class="row ml-0">
+            <span asp-validation-for="InputModel.ImageUpload" class="text-danger w-25"></span>
+            <span asp-validation-for="InputModel.Price" class="text-danger w-50 col align-self-end mr-3 ml-4"></span>
+        </div>
+        <div class="row ml-0">
+            
+                <img id="pictureId" src="@Model.InputModel.Image" alt="Not Found" width="75" height="75" />
+                <input asp-for="InputModel.Image" hidden />
+            
+            <input id="imageInputField" type="file" class="form-control-file w-25 mt-2 mb-4 border rounded" placeholder="Image..." asp-for="InputModel.ImageUpload">
+            <div class="input-group w-50 col align-self-end mr-3 ml-4 mb-4">
+                <span class="input-group-addon"><i class="fa fa-euro mt-1"></i></span>
+                <input type="number" step="0.01" class="form-control" placeholder="Price" asp-for="InputModel.Price">
+            </div>
+        </div>
+        <div class="row ml-0">
+            <button type="button" id="changeBtnId" class="btn btn-sm bg-primary"> Change</button>
+        </div>
+        <label class="text-primary h5"> Choose required ingredients: </label>
+
+        <div id="errorMessage" class="alert alert-danger" role="alert">
+            The number of ingredients must be at least 1 and no more than 10.
+        </div>
+
+        <div id="ingredientsContainer">
+            <div asp-validation-summary="ModelOnly" class="text-danger pb-1"></div>
+
+            @for (int i = 0; i < numberOfIgredients; i++)
+            {
+                <span id="validationIngredientsSelect" asp-validation-for="InputModel.Ingredients[i].IngredientId" class="text-danger"></span>
+                <span id="validationIngredientsCount" asp-validation-for="InputModel.Ingredients[i].Count" class="text-danger"></span>
+                <span id="validationIngredientsWeight" asp-validation-for="InputModel.Ingredients[i].Weight" class="text-danger"></span>
+                <div id="ingredientRow" class="row ml-0">
+                    <select id="ingredientsSelect" type="text" class="form-control w-25 col align-self-start" asp-for="InputModel.Ingredients[i].IngredientId">
+                        <option selected disabled value="0">--- Select Ingredient Type ---</option>
+                        @for (int j = 0; j < Model.Ingredients.Count; j++)
+                        {
+                            <option value="@Model.Ingredients[j].Id">@Model.Ingredients[j].Name</option>
+                        }
+                    </select>
+                    @*<span id="validationIngredientsSelect" asp-validation-for="InputModel.Ingredients[i].IngredientId" class="text-danger"></span>*@
+                    @{
+                        string ingredientsCountId = $"ingredientsCount{i}";
+                        <input id="@ingredientsCountId" class="form-control mb-4 w-25 col align-self-center ml-4" placeholder="Count" asp-for="InputModel.Ingredients[i].Count">
+                        @*<span id="validationIngredientsCount" asp-validation-for="InputModel.Ingredients[i].Count" class="text-danger"></span>*@
+
+
+                        string ingredientsWeightId = $"ingredientsWeight{i}";
+                        <input id="@ingredientsWeightId" type="number" class="form-control mb-4 w-25 col align-self-end ml-4 mr-3" placeholder="Weight (grams)" asp-for="InputModel.Ingredients[i].Weight">
+                    }
+                    @*<span id="validationIngredientsWeight" asp-validation-for="InputModel.Ingredients[i].Weight" class="text-danger"></span>*@
+
+                </div>
+            }
+
+
+        </div>
+        <div class="row d-flex justify-content-end mr-4">
+            <button id="addIngredient" class="btn btn-primary icon-plus"></button>
+            <button id="removeIngredient" class="btn btn-danger icon-minus ml-4"></button>
+        </div>
+        <input type="hidden" id="numberOfIngredients" name="numberOfIngredients" value="@numberOfIgredients">
+        <small id="createIngredientTypeLink" class="form-text text-muted d-flex justify-content-end">
+            <a class="pr-2" href="/Administration/Ingredients/CreateIngredient">Missing appropriate ingredient?</a>
+        </small>
+        <hr class="bg-info" />
+
+        <button class="btn btn-warning btn-block" type="submit">Edit</button>
+
+    </form>
+</div>

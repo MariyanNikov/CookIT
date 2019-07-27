@@ -3,20 +3,21 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-
     using AutoMapper;
     using CookIt.Data.Models;
     using CookIt.Services.Mapping;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
 
-    public class RecipeCreateBindingModel : IMapTo<Recipe>, IHaveCustomMappings, IValidatableObject
+    public class RecipeEditViewModel : IMapFrom<Recipe>,IMapTo<Recipe>, IHaveCustomMappings, IValidatableObject
     {
-        public RecipeCreateBindingModel()
+        public RecipeEditViewModel()
         {
-            this.Ingredients = new List<RecipeIngredientBindingModel>();
+            this.Ingredients = new List<RecipeEditIngredientBindingModel>();
         }
 
-        // TODO: add validations
+        public int Id { get; set; }
+
         [Required]
         [StringLength(30, ErrorMessage = "The {0} field must be between {2} and {1} characters.", MinimumLength = 3)]
         [Display(Name = "Name")]
@@ -42,18 +43,18 @@
         [Display(Name = "Price")]
         public decimal Price { get; set; }
 
-        [Required]
-        public IFormFile Image { get; set; }
+        public string Image { get; set; }
 
-        public IList<RecipeIngredientBindingModel> Ingredients { get; set; }
+        public IFormFile ImageUpload { get; set; }
+
+        public IList<RecipeEditIngredientBindingModel> Ingredients { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Recipe, RecipeCreateBindingModel>()
-                .ForMember(x => x.Image, c => c.Ignore());
-            configuration.CreateMap<RecipeCreateBindingModel, Recipe>()
-                .ForMember(x => x.Image, c => c.Ignore());
-            configuration.CreateMap<RecipeCreateBindingModel, Recipe>()
+            configuration.CreateMap<Recipe, RecipeEditViewModel>()
+                .ForMember(x => x.Ingredients, opt => opt.MapFrom(c => c.RecipeIngredients));
+
+            configuration.CreateMap<RecipeEditViewModel, Recipe>()
                 .ForMember(x => x.RecipeIngredients, opt => opt.MapFrom(c => c.Ingredients));
         }
 

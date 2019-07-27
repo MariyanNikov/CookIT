@@ -12,10 +12,12 @@
     public class RecipeService : IRecipeService
     {
         private readonly IDeletableEntityRepository<Recipe> recipeRepository;
+        private readonly IRepository<RecipeIngredient> recipeIngredientRepository;
 
-        public RecipeService(IDeletableEntityRepository<Recipe> recipeRepository)
+        public RecipeService(IDeletableEntityRepository<Recipe> recipeRepository, IRepository<RecipeIngredient> recipeIngredientRepository)
         {
             this.recipeRepository = recipeRepository;
+            this.recipeIngredientRepository = recipeIngredientRepository;
         }
 
         public async Task<bool> CreateRecipe<TModel>(TModel recipe, string imageUrl)
@@ -63,6 +65,35 @@
 
             this.recipeRepository.Undelete(recipe);
             await this.recipeRepository.SaveChangesAsync();
+            return true;
+        }
+
+        public TModel FindRecipeById<TModel>(int id)
+        {
+            var recipe = this.recipeRepository.AllWithDeleted().Where(x => x.Id == id).To<TModel>();
+            return recipe.SingleOrDefault();
+        }
+
+        public IQueryable<TModel> GetAllRecipeIngredients<TModel>()
+        {
+            var ingredients = this.recipeIngredientRepository.All().To<TModel>();
+            return ingredients;
+        }
+
+        public async Task<bool> UpdateRecipe<TModel>(TModel recipe, int recipeId)
+        {
+
+            var recipeIngredients = this.recipeIngredientRepository.AllAsNoTracking().Where(x => x.RecipeId == recipeId).ToList();
+            foreach (var recipeIngredient in recipeIngredients)
+            {
+                this.recipeIngredientRepository.Delete(recipeIngredient);
+            }
+            await this.recipeIngredientRepository.SaveChangesAsync();
+
+            var recipeForDb = Mapper.Map<Recipe>(recipe);
+            this.recipeRepository.Update(recipeForDb);
+            await this.recipeRepository.SaveChangesAsync();
+
             return true;
         }
     }

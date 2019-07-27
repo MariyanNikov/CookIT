@@ -16,5 +16,11 @@
         Task<bool> SoftDeleteRecipe(int id);
 
         Task<bool> UnDeleteRecipe(int id);
+
+        TModel FindRecipeById<TModel>(int id);
+
+        IQueryable<TModel> GetAllRecipeIngredients<TModel>();
+
+        Task<bool> UpdateRecipe<TModel>(TModel recipe, int recipeId);
     }
 }

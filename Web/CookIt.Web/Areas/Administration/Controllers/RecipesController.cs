@@ -19,6 +19,7 @@
         private const string SuccessMessageCreatedRecipe = "You have successfully created {0} recipe.";
         private const string SuccessMessageSoftDeleteRecipe = "You have successfully softly deleted recipe with id {0}.";
         private const string SuccessMessageUnDeleteRecipe = "You have successfully undeleted recipe with id {0}.";
+        private const string SuccessMessageEditRecipe = "You have successfully edited {0} recipe.";
         private const int DefaultPageSize = 10;
         private const int DefaultPage = 1;
 
@@ -121,9 +122,49 @@
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return this.View();
+            var recipe = this.recipeService.FindRecipeById<RecipeEditViewModel>(id);
+            var ingredients = await this.ingredientService.GetAllIngreients<AllIngredientViewModel>().ToListAsync();
+            var model = new RecipeEditBaseModel { Ingredients = ingredients, InputModel = recipe };
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(RecipeEditBaseModel recipeBindingModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                var ingredients = await this.ingredientService.GetAllIngreients<AllIngredientViewModel>().ToListAsync();
+                recipeBindingModel.Ingredients = ingredients;
+                return this.View(recipeBindingModel);
+            }
+
+            bool areAllIdsValid = await this.ingredientService.CheckExistingIngredientId(
+                recipeBindingModel.InputModel.Ingredients
+                .Select(x => x.IngredientId).ToList());
+
+            if (!areAllIdsValid)
+            {
+                var ingredients = await this.ingredientService.GetAllIngreients<AllIngredientViewModel>().ToListAsync();
+                recipeBindingModel.Ingredients = ingredients;
+                this.ModelState.AddModelError(string.Empty, ErrorMessageInvalidIngredients);
+                return this.View(recipeBindingModel);
+            }
+
+            if (recipeBindingModel.InputModel.ImageUpload != null)
+            {
+                var imageUrl = await this.cloudinaryService.UploadImageAsync(recipeBindingModel.InputModel.ImageUpload, recipeBindingModel.InputModel.Name);
+                recipeBindingModel.InputModel.Image = imageUrl;
+            }
+
+            recipeBindingModel.InputModel.Id = recipeBindingModel.Id;
+            await this.recipeService.UpdateRecipe<RecipeEditViewModel>(recipeBindingModel.InputModel, recipeBindingModel.Id);
+
+            // TODO: Renaming to existing name check.
+            this.TempData["StatusMessage"] = string.Format(SuccessMessageEditRecipe, recipeBindingModel.InputModel.Name);
+            return this.RedirectToAction("AllRecipes", "Recipes");
         }
     }
 }

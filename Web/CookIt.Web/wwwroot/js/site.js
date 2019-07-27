@@ -128,6 +128,17 @@ $(function () {
         $('#numberOfIngredients').val(Number(numberOfIngredients) - 1);
     });
 
+});
 
+$(function () {
+    $('#imageInputField').hide();
 
+    $('#changeBtnId').click(function (event) {
+        event.preventDefault();
+
+        $("#pictureId").hide();
+        $("#changeBtnId").hide();
+
+        $('#imageInputField').show();
+    });
 });
