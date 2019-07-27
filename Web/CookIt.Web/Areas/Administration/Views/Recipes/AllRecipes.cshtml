@@ -1,59 +1,86 @@
-﻿@model List<CookIt.Web.ViewModels.Recipe.RecipeAllViewModel>
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Common;
+
+@model IPagedList<CookIt.Web.ViewModels.Recipe.RecipeAllViewModel>
 
 @{
     ViewData["Title"] = "AllRecipes";
 }
-   
-        <p class="h5 mb-4 d-flex justify-content-center">All Recipes</p>
-        @if (Model.Count == 0)
-        {
-            <div class="col-md-12 pt-2">
-                <div class="alert alert-dark" role="alert">
-                    There are no ingredients added.
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="d-flex justify-content-center">
-                
-                    <partial name="_StatusMessage" for="@this.TempData["StatusMessage"]" />
-                    <div class="table-responsive">
-                        <table class="table table-bordered border-info">
-                            <thead class="border-danger">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Portions</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Remove</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (int i = 0; i < Model.Count; i++)
-                                {
-                                <tr>
-                                    <th scope="row">@(i + 1)</th>
-                                    <td>@Model[i].Name</td>
-                                    <td>@Model[i].Price</td>
-                                    <td>@Model[i].Portions</td>
-                                    <td>@Model[i].Description</td>
-                                    <td>
-                                        <form method="post">
-                                            <div class="d-flex justify-content-center">
-                                                @*<button type="submit" asp-controller="Ingredients" asp-action="RemoveIngredient" asp-route-id="@Model[i].Id" class="close" aria-label="Close">
-                        <span aria-hidden="true" style="color:red">&times;</span>
-                    </button>*@
-                                                <button type="submit" class="btn btn-danger fa" asp-controller="Ingredients" asp-action="RemoveIngredient" asp-route-id="@Model[i].Id">Remove <i class="fa fa-close"></i></button>
-                                            </div>
-                                        </form>
-                                    </td>
-                                </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                
-            </div>
-        }
+
+<p class="h5 mb-4 d-flex justify-content-center">All Recipes</p>
+@if (Model.Count == 0)
+{
+    <div class="col-md-12 pt-2">
+        <div class="alert alert-dark" role="alert">
+            There are no ingredients added.
+        </div>
+    </div>
+}
+else
+{
+    <div>
+        <partial name="_StatusMessage" for="@this.TempData["StatusMessage"]" />
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="table-responsive">
+            <table class="table table-bordered border-info table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="auto">#</th>
+                        <th scope="auto">Name</th>
+                        <th scope="auto">Price</th>
+                        <th scope="auto">Portions</th>
+                        <th scope="auto">Description</th>
+                        <th scope="auto">Picture</th>
+                        <th scope="auto"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <th scope="row">@((i + 1) + ((Model.PageNumber - 1) * Model.PageSize))</th>
+                            <td>@Model[i].Name</td>
+                            <td>@Model[i].Price <i class="fa fa-euro"></i></td>
+                            <td>@Model[i].Portions</td>
+                            <td>@Model[i].Description</td>
+                            <td><img src="@Model[i].Image" alt="Not Found" width="35" height="35" /></td>
+                            <td>
+                                <form method="post">
+                                    <div class="row mr-2 d-flex justify-content-center">
+                                        @if (Model[i].IsDeleted)
+                                        {
+                                            <button type="submit" class="col-md-3 btn btn-primary fa ml-2" asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[i].Id">Details <i class="fa fa-info-circle ml-1"></i></button>
+                                            <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@Model[i].Id" class="col-md-3 btn btn-warning fa ml-2">Edit <i class="fa fa-edit"></i></a>
+                                            <button type="submit" class="col-md-3 btn btn-success fa ml-2" asp-controller="Recipes" asp-action="Undelete" asp-route-id="@Model[i].Id">Undelete <i class="fa fa-eraser ml-1"></i></button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="col-md-3 btn btn-primary fa ml-2" asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[i].Id">Details <i class="fa fa-info-circle ml-1"></i></button>
+                                            <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@Model[i].Id" class="col-md-3 btn btn-warning fa ml-2">Edit <i class="fa fa-edit"></i></a>
+                                            <button type="submit" class="col-md-3 btn btn-danger fa ml-2" asp-controller="Recipes" asp-action="Remove" asp-route-id="@Model[i].Id">Remove <i class="fa fa-close ml-1"></i></button>
+                                        }
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("AllRecipes",
+                                                                        new
+                                                                        {
+                                                                            p = page
+                                                                        }),
+                                                                        new PagedListRenderOptionsBase
+                                                                        {
+                                                                            MaximumPageNumbersToDisplay = 5,
+                                                                            LiElementClasses = new string[] { "page-item" },
+                                                                            PageClasses = new string[] { "page-link" }
+                                                                        })
+    </div>
+}

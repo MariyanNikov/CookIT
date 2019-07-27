@@ -4,7 +4,7 @@
 
     using CookIt.Data.Common.Models;
 
-    public class Recipe : BaseModel<int>
+    public class Recipe : BaseDeletableModel<int>, IDeletableEntity
     {
         public Recipe()
         {

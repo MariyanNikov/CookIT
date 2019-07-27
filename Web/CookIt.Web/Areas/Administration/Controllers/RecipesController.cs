@@ -9,11 +9,18 @@
     using CookIt.Web.ViewModels.Recipe;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using X.PagedList;
 
     public class RecipesController : AdministrationController
     {
         private const string ErrorMessageRecipeNameAlreadyExists = "Recipe with name {0} already exists.";
         private const string ErrorMessageInvalidIngredients = "Invalid Ingredients.";
+        private const string ErrorMessageInvalidRecipeId = "invalid Recipe with id {0}.";
+        private const string SuccessMessageCreatedRecipe = "You have successfully created {0} recipe.";
+        private const string SuccessMessageSoftDeleteRecipe = "You have successfully softly deleted recipe with id {0}.";
+        private const string SuccessMessageUnDeleteRecipe = "You have successfully undeleted recipe with id {0}.";
+        private const int DefaultPageSize = 10;
+        private const int DefaultPage = 1;
 
         private readonly ICloudinaryService cloudinaryService;
         private readonly IIngredientService ingredientService;
@@ -69,16 +76,54 @@
 
             var imageUrl = await this.cloudinaryService.UploadImageAsync(recipeBindingModel.InputModel.Image, recipeBindingModel.InputModel.Name);
             await this.recipeService.CreateRecipe<RecipeCreateBindingModel>(recipeBindingModel.InputModel, imageUrl);
-
+            this.TempData["StatusMessage"] = string.Format(SuccessMessageCreatedRecipe, recipeBindingModel.InputModel.Name);
             return this.RedirectToAction("AllRecipes", "Recipes");
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllRecipes()
+        public async Task<IActionResult> AllRecipes(int? p)
         {
-            var recipes = await this.recipeService.GetAllRecipes<RecipeAllViewModel>().ToListAsync();
+            var page = p ?? DefaultPage;
 
-            return this.View(recipes);
+            var recipes = await this.recipeService.GetAllRecipesWithDeleted<RecipeAllViewModel>().ToListAsync();
+
+            var pageRecipes = recipes.ToPagedList(page, DefaultPageSize);
+
+            return this.View(pageRecipes);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Remove(int id)
+        {
+            if (!this.recipeService.CheckRecipeById(id))
+            {
+                this.TempData["StatusMessage"] = string.Format(ErrorMessageInvalidRecipeId, id);
+                return this.RedirectToAction("AllRecipes", "Recipes");
+            }
+
+            await this.recipeService.SoftDeleteRecipe(id);
+            this.TempData["StatusMessage"] = string.Format(SuccessMessageSoftDeleteRecipe, id);
+            return this.RedirectToAction("AllRecipes", "Recipes");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UnDelete(int id)
+        {
+            if (!this.recipeService.CheckRecipeById(id))
+            {
+                this.TempData["StatusMessage"] = string.Format(ErrorMessageInvalidRecipeId, id);
+                return this.RedirectToAction("AllRecipes", "Recipes");
+            }
+
+            await this.recipeService.UnDeleteRecipe(id);
+            this.TempData["StatusMessage"] = string.Format(SuccessMessageUnDeleteRecipe, id);
+            return this.RedirectToAction("AllRecipes", "Recipes");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            return this.View();
         }
     }
 }

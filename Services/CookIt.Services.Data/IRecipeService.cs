@@ -1,9 +1,6 @@
 ﻿namespace CookIt.Services.Data
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     public interface IRecipeService
@@ -12,6 +9,12 @@
 
         bool CheckRecipeByName(string name);
 
-        IQueryable<TModel> GetAllRecipes<TModel>();
+        IQueryable<TModel> GetAllRecipesWithDeleted<TModel>();
+
+        bool CheckRecipeById(int id);
+
+        Task<bool> SoftDeleteRecipe(int id);
+
+        Task<bool> UnDeleteRecipe(int id);
     }
 }
