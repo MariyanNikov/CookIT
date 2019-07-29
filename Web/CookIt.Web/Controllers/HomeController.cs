@@ -1,5 +1,7 @@
 ﻿namespace CookIt.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using CookIt.Data.Models;
     using CookIt.Services.Data;
     using CookIt.Services.Data.ApplicationUser;
@@ -7,7 +9,6 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using System.Threading.Tasks;
 
     public class HomeController : BaseController
     {
@@ -28,6 +29,8 @@
         public async Task<IActionResult> Index()
         {
             var recipes = await this.recipeService.GetAllRecipesWithoutDeleted<RecipeIndexViewModel>().ToListAsync();
+
+            var a = 5;
             return this.View(recipes);
         }
 

@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using AutoMapper;
+
     using CookIt.Data.Models;
     using CookIt.Services.Mapping;
 

@@ -162,7 +162,7 @@ for details on configuring this project to bundle and minify static web assets. 
         animation-duration: .3s;
     }
 
-}
+
 
 @media screen and (min-width: 997px) {
     .wrapper {

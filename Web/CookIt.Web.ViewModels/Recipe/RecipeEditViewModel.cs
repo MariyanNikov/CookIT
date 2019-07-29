@@ -3,13 +3,13 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
+
     using AutoMapper;
     using CookIt.Data.Models;
     using CookIt.Services.Mapping;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
 
-    public class RecipeEditViewModel : IMapFrom<Recipe>,IMapTo<Recipe>, IHaveCustomMappings, IValidatableObject
+    public class RecipeEditViewModel : IMapFrom<Recipe>, IMapTo<Recipe>, IHaveCustomMappings, IValidatableObject
     {
         public RecipeEditViewModel()
         {

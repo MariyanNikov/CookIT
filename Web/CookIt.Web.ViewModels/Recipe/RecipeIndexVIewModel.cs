@@ -6,7 +6,7 @@
 
     public class RecipeIndexViewModel : IMapFrom<Recipe>, IHaveCustomMappings
     {
-        private const int NumberOfCharsForDescription = 50;
+        private const int NumberOfCharsForDescription = 100;
 
         public int Id { get; set; }
 
@@ -23,8 +23,7 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Recipe, RecipeIndexViewModel>()
-                .ForMember(x => x.RequiredIngredients, opt => opt.MapFrom(c => c.RecipeIngredients.Count));
-            configuration.CreateMap<Recipe, RecipeAllViewModel>()
+                .ForMember(x => x.RequiredIngredients, opt => opt.MapFrom(c => c.RecipeIngredients.Count))
                 .ForMember(x => x.Description, opt => opt.AddTransform(c => c.Length > NumberOfCharsForDescription ? c.Substring(0, NumberOfCharsForDescription) + "..." : c.ToString()));
         }
     }

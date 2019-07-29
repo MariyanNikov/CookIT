@@ -99,5 +99,12 @@
 
             return recipes;
         }
+
+        public TModel GetRecipeWithoutDeleted<TModel>(int id)
+        {
+            var recipe = this.recipeRepository.All().Where(x => x.Id == id).To<TModel>().FirstOrDefault();
+
+            return recipe;
+        }
     }
 }
