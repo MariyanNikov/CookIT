@@ -1,9 +1,58 @@
-﻿@model IEnumerable<CookIt.Web.ViewModels.Address.AddressBindingModel>
+﻿@model List<CookIt.Web.ViewModels.Recipe.RecipeIndexViewModel>
 @{
     this.ViewData["Title"] = "Home Page";
 }
+<div class="d-flex justify-content-center">
+    <div class="row">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to CookIt!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <div class="col-9">
+            <div class="row">
+                @foreach(var recipe in Model)
+                { 
+                    <div class="col-md-3 mt-3">
+                        <div class="card h-100" style="width: 18rem; background: #eee">
+                            <a href="/Recipes/Details/@recipe.Id">
+                                <img class="card-img-top" src="@recipe.Image" alt="Not Found" height="150">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">@recipe.Name</h5>
+                                <p class="card-text">@recipe.Description</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item font-italic centered" style="background: #eee"><b>Required Ingrediets:</b> <a href="/Recipes/Details/@recipe.Id"><i class="h6 text-success">@recipe.RequiredIngredients</i> <i class="fa fa-leaf text-success"></i></a></li>
+                                <li class="list-group-item centered" style="background: #eee">Dapibus ac facilisis in</li>
+                                <li class="list-group-item centered" style="background: #eee"><b>Price:</b> <i class="h3 text-danger">@recipe.Price</i> <i class="fa fa-euro text-danger fa-2x"></i></li>
+                            </ul>
+                            <div class="align-text-bottom">
+                                <div class="card-body">
+                                    <a href="/Recipes/Details/@recipe.Id" class="btn btn-success">Details</a>
+                                    <a href="#" class="btn btn-primary ml-2">Add to Cart <i class="fa fa-cart-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="d-flex centered">
+                <div class="card col" style="width: 18rem;">
+                    <img class="card-img-top" src="https://res.cloudinary.com/cookitproject/image/upload/v1564184360/recipe_images/rf6vvmebi0ngsdllv1xr.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -82,12 +82,8 @@
 
         public async Task<bool> UpdateRecipe<TModel>(TModel recipe, int recipeId)
         {
-
             var recipeIngredients = this.recipeIngredientRepository.AllAsNoTracking().Where(x => x.RecipeId == recipeId).ToList();
-            foreach (var recipeIngredient in recipeIngredients)
-            {
-                this.recipeIngredientRepository.Delete(recipeIngredient);
-            }
+            this.recipeIngredientRepository.DeleteAll(recipeIngredients);
             await this.recipeIngredientRepository.SaveChangesAsync();
 
             var recipeForDb = Mapper.Map<Recipe>(recipe);
@@ -95,6 +91,13 @@
             await this.recipeRepository.SaveChangesAsync();
 
             return true;
+        }
+
+        public IQueryable<TModel> GetAllRecipesWithoutDeleted<TModel>()
+        {
+            var recipes = this.recipeRepository.All().To<TModel>();
+
+            return recipes;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace CookIt.Data.Common.Repositories
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -16,6 +17,8 @@
         void Update(TEntity entity);
 
         void Delete(TEntity entity);
+
+        void DeleteAll(ICollection<TEntity> entities);
 
         Task<int> SaveChangesAsync();
     }

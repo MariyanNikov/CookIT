@@ -1,25 +1,34 @@
 ﻿namespace CookIt.Web.Controllers
 {
     using CookIt.Data.Models;
+    using CookIt.Services.Data;
     using CookIt.Services.Data.ApplicationUser;
-    using CookIt.Web.ViewModels.Address;
+    using CookIt.Web.ViewModels.Recipe;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using System.Threading.Tasks;
 
     public class HomeController : BaseController
     {
         private readonly IApplicationUserService applicationUserService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IRecipeService recipeService;
 
-        public HomeController(IApplicationUserService applicationUserService, UserManager<ApplicationUser> userManager)
+        public HomeController(
+            IApplicationUserService applicationUserService,
+            UserManager<ApplicationUser> userManager,
+            IRecipeService recipeService)
         {
             this.applicationUserService = applicationUserService;
             this.userManager = userManager;
+            this.recipeService = recipeService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return this.View();
+            var recipes = await this.recipeService.GetAllRecipesWithoutDeleted<RecipeIndexViewModel>().ToListAsync();
+            return this.View(recipes);
         }
 
         public IActionResult Privacy()

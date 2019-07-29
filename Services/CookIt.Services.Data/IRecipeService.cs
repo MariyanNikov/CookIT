@@ -22,5 +22,7 @@
         IQueryable<TModel> GetAllRecipeIngredients<TModel>();
 
         Task<bool> UpdateRecipe<TModel>(TModel recipe, int recipeId);
+
+        IQueryable<TModel> GetAllRecipesWithoutDeleted<TModel>();
     }
 }

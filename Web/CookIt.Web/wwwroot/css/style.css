@@ -785,6 +785,19 @@ i:before {
   transition: all 400ms linear 0s;
 }
 
+.profileIcon {
+    padding: 0px;
+    padding-left: 7px;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color: #000;
+    -webkit-transition: all 400ms linear 0s;
+    -o-transition: all 400ms linear 0s;
+    transition: all 400ms linear 0s;
+}
+
 .shop_header_area .navbar .navbar-nav li a:after {
   display: none;
 }

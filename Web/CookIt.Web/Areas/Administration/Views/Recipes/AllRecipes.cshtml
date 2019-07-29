@@ -48,18 +48,18 @@ else
                             <td><img src="@Model[i].Image" alt="Not Found" width="35" height="35" /></td>
                             <td>
                                 <form method="post">
-                                    <div class="row mr-2 d-flex justify-content-center">
+                                    <div class="row mr-1 d-flex justify-content-center">
                                         @if (Model[i].IsDeleted)
                                         {
-                                            <button type="submit" class="col-md-3 btn btn-primary fa ml-2" asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[i].Id">Details <i class="fa fa-info-circle ml-1"></i></button>
-                                            <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@Model[i].Id" class="col-md-3 btn btn-warning fa ml-2">Edit <i class="fa fa-edit"></i></a>
-                                            <button type="submit" class="col-md-3 btn btn-success fa ml-2" asp-controller="Recipes" asp-action="Undelete" asp-route-id="@Model[i].Id">Undelete <i class="fa fa-eraser ml-1"></i></button>
+                                            <a class="col-md-3 btn btn-primary fa ml-1" asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[i].Id">Details<i class="fa fa-info-circle ml-1"></i></a>
+                                            <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@Model[i].Id" class="col-md-3 btn btn-warning fa ml-1">Edit <i class="fa fa-edit"></i></a>
+                                            <button type="submit" class="col-md-3 btn btn-success fa ml-1 pr-5" asp-controller="Recipes" asp-action="Undelete" asp-route-id="@Model[i].Id">Undelete<i class="fa fa-eraser ml-1"></i></button>
                                         }
                                         else
                                         {
-                                            <button type="submit" class="col-md-3 btn btn-primary fa ml-2" asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[i].Id">Details <i class="fa fa-info-circle ml-1"></i></button>
-                                            <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@Model[i].Id" class="col-md-3 btn btn-warning fa ml-2">Edit <i class="fa fa-edit"></i></a>
-                                            <button type="submit" class="col-md-3 btn btn-danger fa ml-2" asp-controller="Recipes" asp-action="Remove" asp-route-id="@Model[i].Id">Remove <i class="fa fa-close ml-1"></i></button>
+                                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[i].Id" class="col-md-3 btn btn-primary fa ml-1" >Details<i class="fa fa-info-circle ml-1"></i></a>
+                                            <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@Model[i].Id" class="col-md-3 btn btn-warning fa ml-1">Edit <i class="fa fa-edit"></i></a>
+                                            <button type="submit" class="col-md-3 btn btn-danger fa ml-1 pr-5" asp-controller="Recipes" asp-action="Remove" asp-route-id="@Model[i].Id">Remove<i class="fa fa-close ml-1"></i></button>
                                         }
                                     </div>
                                 </form>
