@@ -30,7 +30,6 @@
         {
             var recipes = await this.recipeService.GetAllRecipesWithoutDeleted<RecipeIndexViewModel>().ToListAsync();
 
-            var a = 5;
             return this.View(recipes);
         }
 

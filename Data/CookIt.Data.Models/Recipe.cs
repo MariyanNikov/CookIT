@@ -9,6 +9,7 @@
         public Recipe()
         {
             this.RecipeIngredients = new HashSet<RecipeIngredient>();
+            this.Reviews = new HashSet<Review>();
         }
 
         public string Name { get; set; }
@@ -22,6 +23,8 @@
         public string Image { get; set; }
 
         public decimal Price { get; set; }
+
+        public ICollection<Review> Reviews { get; set; }
 
         public ICollection<RecipeIngredient> RecipeIngredients { get; set; }
     }

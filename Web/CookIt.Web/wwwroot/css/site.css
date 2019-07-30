@@ -303,3 +303,13 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 /*# sourceMappingURL=style.css.map */
+.reviewStar {
+    color: #292b2c;
+}
+
+.reviewStar:hover {
+    color: #ff0000;
+}
+.reviewStarClicked {
+    color: #ff0000;
+}

@@ -4,14 +4,16 @@ using CookIt.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CookIt.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190729224533_Added_Reviews")]
+    partial class Added_Reviews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,15 +250,11 @@ namespace CookIt.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn");
 
-                    b.Property<int>("RecipeId");
-
                     b.Property<int>("Stars");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("RecipeId");
 
                     b.ToTable("Reviews");
                 });
@@ -405,11 +403,6 @@ namespace CookIt.Data.Migrations
                     b.HasOne("CookIt.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Review")
                         .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("CookIt.Data.Models.Recipe", "Recipe")
-                        .WithMany("Reviews")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

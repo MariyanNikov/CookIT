@@ -68,7 +68,7 @@ let disableButtons = function () {
 
 $(function () {
     $('#errorMessage').first().hide();
-   
+
     disableButtons();
 
     $('#addIngredient').click(function (event) {
@@ -84,8 +84,8 @@ $(function () {
         let container = $('#ingredientsContainer');
 
         let ingredientRow = $('#ingredientRow').clone();
-        
-        
+
+
         ingredientRow.children()[0].setAttribute("name", `InputModel.Ingredients[${numberOfIngredients}].IngredientId`);
         //ingredientRow.children()[1].setAttribute('data-valmsg-for', `InputModel.Ingredients[${numberOfIngredients}].IngredientId`);
         ingredientRow.children()[1].setAttribute("name", `InputModel.Ingredients[${numberOfIngredients}].Count`);
@@ -94,7 +94,7 @@ $(function () {
         ingredientRow.children()[2].setAttribute("name", `InputModel.Ingredients[${numberOfIngredients}].Weight`);
         ingredientRow.children()[2].setAttribute("id", `ingredientsWeight${numberOfIngredients}`);
         //ingredientRow.children()[5].setAttribute('data-valmsg-for', `InputModel.Ingredients[${numberOfIngredients}].Weight`);
-        
+
 
         $('#numberOfIngredients').val(Number(numberOfIngredients) + 1);
         container.append(ingredientRow);
@@ -142,3 +142,28 @@ $(function () {
         $('#imageInputField').show();
     });
 });
+
+
+var $star_rating = $('.star-rating .fa');
+
+var SetRatingStar = function () {
+    return $star_rating.each(function () {
+        if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+            return $(this).addClass('reviewStarClicked');
+        } else {
+            return $(this).removeClass('reviewStarClicked');
+        }
+    });
+};
+
+$star_rating.on('click', function () {
+    $star_rating.siblings('#starsValue').val($(this).data('rating'));
+
+    return SetRatingStar();
+});
+
+SetRatingStar();
+$(document).ready(function () {
+
+});
+

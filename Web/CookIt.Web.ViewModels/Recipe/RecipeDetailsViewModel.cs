@@ -5,6 +5,7 @@
     using AutoMapper;
     using CookIt.Data.Models;
     using CookIt.Services.Mapping;
+    using CookIt.Web.ViewModels.Review;
 
     public class RecipeDetailsViewModel : IMapFrom<Recipe>, IHaveCustomMappings
     {
@@ -25,7 +26,11 @@
 
         public decimal Price { get; set; }
 
+        public bool HasReviewed { get; set; }
+
         public ICollection<RecipeIngredientsDetailsViewModel> Ingreients { get; set; }
+
+        public ReviewBindingModel ReviewBindingModel { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
