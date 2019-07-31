@@ -313,3 +313,44 @@ for details on configuring this project to bundle and minify static web assets. 
 .reviewStarClicked {
     color: #ff0000;
 }
+
+/*blockquote*/
+
+.quote {
+    background-color: #dddddd;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color: #000;
+    margin: 0;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.name-quote {
+    background-color: #0076ad;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    color: white;
+    font-size: 17px;
+    padding: 10px;
+    text-align: end;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.created-quote {
+    background-color: #0076ad;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    color: white;
+    font-size: 17px;
+    padding: 10px;
+    text-align: start;
+    font-family: "Times New Roman", Times, serif;
+}
+
+/* Reset */
+blockquote {
+    padding: 0;
+    margin: 0;
+}
+

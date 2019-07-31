@@ -1,16 +1,19 @@
-﻿@model List<CookIt.Web.ViewModels.Recipe.RecipeIndexViewModel>
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Common;
+@model IPagedList<CookIt.Web.ViewModels.Recipe.RecipeIndexViewModel>
 @{
     this.ViewData["Title"] = "Home Page";
 }
-<div class="d-flex justify-content-center">
+<div >
     <div class="row">
 
         <div class="col-9">
-            <div class="row">
-                @foreach(var recipe in Model)
-                { 
+            <div class="row d-flex justify-content-around">
+                @foreach (var recipe in Model)
+                {
                     <div class="col-md-3 mt-3">
-                        <div class="card h-100" style="width: 18rem; background: #eee">
+                        <div class="card h-100 " style="width: 18rem; background: #eee">
                             <a href="/Recipes/Details/@recipe.Id">
                                 <img class="card-img-top" src="@recipe.Image" alt="Not Found" height="150">
                             </a>
@@ -19,8 +22,8 @@
                                 <p class="card-text">@recipe.Description</p>
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item font-italic centered" style="background: #eee"><b>Required Ingrediets:</b> <a href="/Recipes/Details/@recipe.Id"><i class="h6 text-success">@recipe.RequiredIngredients</i> <i class="fa fa-leaf text-success"></i></a></li>
-                                <li class="list-group-item centered" style="background: #eee">Dapibus ac facilisis in</li>
+                                <li class="list-group-item font-italic centered" style="background: #eee"><b>Required Ingrediets:</b> <a href="/Recipes/Details/@recipe.Id"><i class="h5 text-success">@recipe.RequiredIngredients</i> <i class="fa fa-leaf text-success"></i></a></li>
+                                <li class="list-group-item centered" style="background: #eee"><b>Published Reviews:</b> <a href="/Recipes/Details/@recipe.Id"><i class="h5 text-primary">@recipe.ReviewsCount</i> <i class="fa fa-pencil text-primary"></i></a></li>
                                 <li class="list-group-item centered" style="background: #eee"><b>Price:</b> <i class="h3 text-danger">@recipe.Price</i> <i class="fa fa-euro text-danger fa-2x"></i></li>
                             </ul>
                             <div class="align-text-bottom">
@@ -31,8 +34,31 @@
                             </div>
                         </div>
                     </div>
+
                 }
+                @if (Model.Count % 4 != 0)
+                {
+                    @for (int i = 0; i < 4 - Model.Count % 4; i++)
+                    {
+                        <div class="col-md-3 mt-3 empty"></div>
+                    }
+                }
+
             </div>
+            <div class="row d-flex justify-content-center mt-4">
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
+                                                                                new
+                                                                                {
+                                                                                    p = page
+                                                                                }),
+                                                                                new PagedListRenderOptionsBase
+                                                                                {
+                                                                                    MaximumPageNumbersToDisplay = 5,
+                                                                                    LiElementClasses = new string[] { "page-item" },
+                                                                                    PageClasses = new string[] { "page-link" }
+                                                                                })
+            </div>
+
         </div>
         <div class="col-3">
             <div class="d-flex centered">
@@ -56,3 +82,4 @@
         </div>
     </div>
 </div>
+    

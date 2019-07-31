@@ -9,9 +9,13 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using X.PagedList;
 
     public class HomeController : BaseController
     {
+        private const int DefaultPageSize = 8;
+        private const int DefaultPages = 1;
+
         private readonly IApplicationUserService applicationUserService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IRecipeService recipeService;
@@ -26,11 +30,15 @@
             this.recipeService = recipeService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? p)
         {
+            var page = p ?? DefaultPages;
+
             var recipes = await this.recipeService.GetAllRecipesWithoutDeleted<RecipeIndexViewModel>().ToListAsync();
 
-            return this.View(recipes);
+            var pagedRecipes = recipes.ToPagedList(page, DefaultPageSize);
+
+            return this.View(pagedRecipes);
         }
 
         public IActionResult Privacy()

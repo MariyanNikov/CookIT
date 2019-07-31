@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
     using CookIt.Data.Models;
     using CookIt.Services.Data;
@@ -30,6 +31,7 @@
         public IActionResult Details(int id)
         {
             var recipe = this.recipeService.GetRecipeWithoutDeleted<RecipeDetailsViewModel>(id);
+
             var userId = this.userManager.GetUserId(this.User);
             recipe.HasReviewed = this.reviewService.HasReviewedRecipeByUserId(id, userId);
 
@@ -45,7 +47,6 @@
             }
 
             var userId = this.userManager.GetUserId(this.User);
-
             await this.reviewService.AddAsync<ReviewBindingModel>(reviewBindingModel,id, userId);
 
             return this.RedirectToAction(nameof(this.Details), new { id });

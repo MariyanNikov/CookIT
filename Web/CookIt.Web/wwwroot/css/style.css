@@ -593,7 +593,7 @@ i:before {
 }
 
 .top_right li.cart a:before {
-  content: "0";
+  content: attr(amount);
   height: 20px;
   width: 20px;
   border-radius: 50%;
@@ -1434,7 +1434,7 @@ i:before {
 }
 
 .cart_list ul li.cart_icon a:before {
-  content: "";
+  content: "2";
   height: 100%;
   width: 1px;
   background: #4b4b4b;
@@ -1444,7 +1444,7 @@ i:before {
 }
 
 .cart_list ul li.cart_icon a:after {
-  content: "0";
+  content: "2";
   height: 20px;
   width: 20px;
   border-radius: 50%;
