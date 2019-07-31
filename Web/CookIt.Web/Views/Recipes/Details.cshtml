@@ -24,12 +24,12 @@
                                             <span class="fa fa-star fa-2x reviewStar" data-rating="4"></span>
                                             <span class="fa fa-star fa-2x reviewStar" data-rating="5"></span>
                                             <input id="starsValue" asp-for="ReviewBindingModel.Stars" class="rating-value" hidden />
-                                            <span asp-validation-for="ReviewBindingModel.Stars"></span>
+                                            <span asp-validation-for="ReviewBindingModel.Stars" class="text-danger"></span>
                                         </div>
                                     </div>
 
                                     <textarea asp-for="ReviewBindingModel.Content" class="form-control ml-1 w-100 mt-2" placeholder="Content"></textarea>
-                                    <span asp-validation-for="ReviewBindingModel.Content"></span>
+                                    <span asp-validation-for="ReviewBindingModel.Content" class="text-danger"></span>
 
                                     <input name="id" value="@Model.Id" hidden />
 
@@ -89,7 +89,7 @@
                         <span class="h5">@Model.TotalReviewScore.ToString("F2") </span>
                         @for (int i = 1; i <= 5; i++)
                         {
-                            if (i == (int)Model.TotalReviewScore + 1 && Model.TotalReviewScore < i)
+                            if (i < Model.TotalReviewScore + 0.99 && Model.TotalReviewScore < i && (int)Model.TotalReviewScore != 0 && (int)Model.TotalReviewScore != i)
                             {
                                 <span class="fa fa-star-half-empty checked"></span>
                                 continue;
@@ -117,7 +117,7 @@
                         <ul class="list-group d-flex flex-row flex-wrap w-100">
                             <li class="list-group-item active bg-success border border-success w-100 d-flex justify-content-start"><div class="w-50">Required Ingredients:</div> <div class="w-50 pl-4">Amount / Weight</div></li>
 
-                            @foreach (var ingredient in Model.Ingreients)
+                            @foreach (var ingredient in Model.Ingredients)
                             {
                                 <li class="list-group-item w-50 d-flex justify-content-center">@ingredient.Name</li>
                                 <li class="list-group-item w-50 d-flex justify-content-center">@ingredient.Amount</li>
@@ -131,7 +131,7 @@
                         </div>
 
                         <div class="action d-flex justify-content-center mt-2">
-                            <a href="#" class="btn btn-primary btn-block mr-4">Add to Cart <i class="fa fa-shopping-cart"></i></a>
+                            <a href="/ShoppingCart/AddToCart/@Model.Id?returnUrl=@this.Url.Action()" class="btn btn-primary btn-block mr-4">Add to Cart <i class="fa fa-shopping-cart"></i></a>
                         </div>
 
                     </div>

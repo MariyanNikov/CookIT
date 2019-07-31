@@ -8,6 +8,7 @@
     using CookIt.Data.Common.Repositories;
     using CookIt.Data.Models;
     using CookIt.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
 
     public class RecipeService : IRecipeService
     {
@@ -102,7 +103,7 @@
 
         public TModel GetRecipeWithoutDeleted<TModel>(int id)
         {
-            var recipe = this.recipeRepository.All().Where(x => x.Id == id).To<TModel>().FirstOrDefault();
+            var recipe = this.recipeRepository.All().Include(x => x.Reviews).Where(x => x.Id == id).To<TModel>().FirstOrDefault();
 
             return recipe;
         }

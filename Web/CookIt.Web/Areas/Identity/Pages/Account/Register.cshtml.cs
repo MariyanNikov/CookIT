@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
 
     using CookIt.Data.Models;
-
+    using CookIt.Services.Data;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.UI.Services;
@@ -22,17 +22,20 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<RegisterModel> logger;
         private readonly IEmailSender emailSender;
+        private readonly IShoppingCartService shoppingCartService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IShoppingCartService shoppingCartService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
             this.emailSender = emailSender;
+            this.shoppingCartService = shoppingCartService;
         }
 
         [BindProperty]
@@ -69,6 +72,10 @@
                     //    "Confirm your email",
                     //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                     await this.signInManager.SignInAsync(user, isPersistent: false);
+
+                    // Creating initial shopping cart upon registration.
+                    await this.shoppingCartService.CreateShoppingCart(user.Id);
+
                     return this.LocalRedirect(returnUrl);
                 }
 

@@ -13,7 +13,8 @@
     {
         public RecipeDetailsViewModel()
         {
-            this.Ingreients = new List<RecipeIngredientsDetailsViewModel>();
+            this.Ingredients = new List<RecipeIngredientsDetailsViewModel>();
+            this.Reviews = new List<ReviewDetailsViewModel>();
         }
 
         public int Id { get; set; }
@@ -30,20 +31,19 @@
 
         public bool HasReviewed { get; set; }
 
-        public double TotalReviewScore { get; set; }
+        public double TotalReviewScore => double.IsNaN(this.Reviews.Sum(z => z.Stars) * 1.0 / this.Reviews.Count) ? 0.0 : this.Reviews.Sum(z => z.Stars) * 1.0 / this.Reviews.Count;
 
         public ICollection<ReviewDetailsViewModel> Reviews { get; set; }
 
-        public ICollection<RecipeIngredientsDetailsViewModel> Ingreients { get; set; }
+        public ICollection<RecipeIngredientsDetailsViewModel> Ingredients { get; set; }
 
         public ReviewBindingModel ReviewBindingModel { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Recipe, RecipeDetailsViewModel>()
-                .ForMember(x => x.Ingreients, opt => opt.MapFrom(c => c.RecipeIngredients))
-                .ForMember(x => x.Reviews, opt => opt.MapFrom(c => c.Reviews.OrderByDescending(z => z.CreatedOn)))
-                .ForMember(x => x.TotalReviewScore, opt => opt.MapFrom(c => c.Reviews.Sum(z => z.Stars) * 1.0 / c.Reviews.Count));
+                .ForMember(x => x.Ingredients, opt => opt.MapFrom(c => c.RecipeIngredients))
+                .ForMember(x => x.Reviews, opt => opt.MapFrom(c => c.Reviews.OrderByDescending(z => z.CreatedOn)));
         }
     }
 }

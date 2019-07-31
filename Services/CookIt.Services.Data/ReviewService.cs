@@ -28,7 +28,7 @@
             return true;
         }
 
-        public bool HasReviewedRecipeByUserId(int recipeId,string userId)
+        public bool HasReviewedRecipeByUserId(int recipeId, string userId)
         {
             var hasReviewed = this.reviewRepository.All().Any(x => x.ApplicationUserId == userId && x.RecipeId == recipeId);
 
