@@ -1,9 +1,5 @@
 ﻿namespace CookIt.Data.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     using CookIt.Data.Common.Models;
 
     public class ShoppingCartItem : BaseModel<int>

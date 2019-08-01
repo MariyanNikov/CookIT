@@ -27,5 +27,7 @@
         public ICollection<Review> Reviews { get; set; }
 
         public ICollection<RecipeIngredient> RecipeIngredients { get; set; }
+
+        public ICollection<OrderRecipe> OrdersRecipe { get; set; }
     }
 }

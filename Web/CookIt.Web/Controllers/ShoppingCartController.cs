@@ -31,9 +31,14 @@
         public async Task<IActionResult> AddToCart(int id, string returnUrl)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            returnUrl = returnUrl ?? "/";
+            if (this.shoppingCartService.IsInShoppingCart(userId, id))
+            {
+                return this.Redirect(returnUrl);
+            }
+
             await this.shoppingCartService.AddShoppingCartItem(userId, id);
 
-            returnUrl = returnUrl ?? "/";
             this.TempData["CartItemAdded"] = true;
             return this.Redirect(returnUrl);
         }

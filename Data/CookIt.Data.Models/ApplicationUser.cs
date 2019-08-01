@@ -45,6 +45,10 @@ namespace CookIt.Data.Models
 
         public virtual ICollection<Review> Review { get; set; }
 
+        public virtual ICollection<Order> Issuers { get; set; }
+
+        public virtual ICollection<Order> Couriers { get; set; }
+
         public ShoppingCart ShoppingCart { get; set; }
     }
 }

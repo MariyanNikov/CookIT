@@ -42,6 +42,12 @@
 
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderRecipe> OrdersRecipes { get; set; }
+
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -97,6 +103,22 @@
             builder.Entity<Recipe>()
                 .Property(x => x.RecipeInstructions)
                 .HasColumnType("text");
+
+            // OrdersRecipes
+            builder.Entity<OrderRecipe>()
+                .HasKey(x => new { x.OrderId, x.RecipeId });
+
+            // Orders - Issuers and Couriers
+            builder.Entity<ApplicationUser>()
+                .HasMany(x => x.Issuers)
+                .WithOne(x => x.Issuer)
+                .HasForeignKey(x => x.IssuerId);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(x => x.Couriers)
+                .WithOne(x => x.Courier)
+                .HasForeignKey(x => x.CourierId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         private static void ConfigureUserIdentityRelations(ModelBuilder builder)

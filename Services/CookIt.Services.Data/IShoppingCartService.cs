@@ -15,6 +15,8 @@
 
         Task<bool> ClearShoppingCart(string userId);
 
-        IQueryable<TModel> GetAllShoppingCartItems<TModel>(string userid);
+        bool IsInShoppingCart(string userId, int recipeId);
+
+        IQueryable<TModel> GetAllShoppingCartItems<TModel>(string userId);
     }
 }

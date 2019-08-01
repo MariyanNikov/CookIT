@@ -1,9 +1,10 @@
 ﻿namespace CookIt.Web.ViewModels.ShoppingCart
 {
+    using System.Linq;
+
     using AutoMapper;
     using CookIt.Data.Models;
     using CookIt.Services.Mapping;
-    using System.Linq;
 
     public class CartItemsViewModel : IMapFrom<ShoppingCartItem>, IHaveCustomMappings
     {
