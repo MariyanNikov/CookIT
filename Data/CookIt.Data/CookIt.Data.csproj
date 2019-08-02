@@ -50,6 +50,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CookIt.Common\CookIt.Common.csproj" />
+    <ProjectReference Include="..\..\Services\CookIt.Services.Data\CookIt.Services.Data.csproj" />
     <ProjectReference Include="..\CookIt.Data.Common\CookIt.Data.Common.csproj" />
     <ProjectReference Include="..\CookIt.Data.Models\CookIt.Data.Models.csproj" />
   </ItemGroup>

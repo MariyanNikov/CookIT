@@ -1,5 +1,7 @@
 ﻿namespace CookIt.Services.Data
 {
+    using CookIt.Data.Models;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -18,5 +20,9 @@
         bool IsInShoppingCart(string userId, int recipeId);
 
         IQueryable<TModel> GetAllShoppingCartItems<TModel>(string userId);
+
+        bool HasItemsInCart(string userId);
+
+        Task<ICollection<ShoppingCartItem>> CheckOutGetCartItems(string userId);
     }
 }

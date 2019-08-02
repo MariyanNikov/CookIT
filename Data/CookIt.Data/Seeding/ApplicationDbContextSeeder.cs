@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
-
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
@@ -25,6 +25,7 @@
 
             var seeders = new List<ISeeder>
                           {
+                              new OrderStatusesSeeder(),
                               new RolesSeeder(),
                               new SettingsSeeder(),
                               new AdminSeeder(),

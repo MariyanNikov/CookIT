@@ -52,7 +52,7 @@
             return this.Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string returnUrl)
         {
             if (!this.ModelState.IsValid)
             {
@@ -68,6 +68,12 @@
             await this.applicationUserService.AddAddress<AddressBindingModel>(this.Input, user.Id);
 
             await this.signInManager.RefreshSignInAsync(user);
+
+            if (returnUrl != null)
+            {
+                return this.Redirect(returnUrl);
+            }
+
             this.StatusMessage = "Added new address.";
             return this.RedirectToPage();
         }

@@ -1,0 +1,91 @@
+﻿@model CookIt.Web.ViewModels.Order.CheckoutInputModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<h1>Checkout</h1>
+
+<div class="card" style="background: #eee">
+    <div class="row">
+        <div class="col-md-6 centered">
+            <h3 class="mt-3 text-center">
+                Billing Details
+            </h3>
+            <div class="row">
+                <div class="col-md-12 ml-2">
+                    <form asp-action="Checkout">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="FullName" class="control-label"></label>
+                                    <input asp-for="FullName" class="form-control" />
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="PhoneNumber" class="control-label"></label>
+                                    <input asp-for="PhoneNumber" class="form-control" />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DeliveryDate" class="control-label"></label>
+                            <input type="date" asp-for="DeliveryDate" class="form-control" />
+                            <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="AddressId" class="control-label"></label>
+                            <select type="text" class="form-control" asp-for="AddressId">
+                                <option selected disabled>--- Select Address ---</option>
+                                <vc:checkout-addresses />
+                            </select>
+                            <small  class="form-text text-muted d-flex justify-content-end">
+                                <a class="pr-2" href="/Identity/Account/Manage/Addresses?returnUrl=@this.Url.Action()">Add new Address!</a>
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Comment" class="control-label"></label>
+                            <input asp-for="Comment" class="form-control" />
+                            <span asp-validation-for="Comment" class="text-danger"></span>
+                        </div>
+                        
+
+                        <div class="alert alert-info">
+                            <strong>Delivery!</strong> Keep in mind that your order will be delivered on the Delivery Date by one of our Couriers, so put any specific details in the comment section.
+                        </div>
+                        <div class="form-group text-center">
+                            <input type="submit" value="Order" class="btn btn-success" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="container-fliud">
+                <div class="wrapper row">
+                    <div class="preview col-md-12 mb-3">
+                        <div class="container mt-3">
+                            <vc:checkout-cart-items />
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,6 @@
+﻿@model IEnumerable<CookIt.Web.ViewModels.Address.AddressViewModel>
+
+@foreach (var address in Model)
+{
+    <option value="@address.Id">@address.StreetAddress - @address.City - @address.CityCode</option>
+}

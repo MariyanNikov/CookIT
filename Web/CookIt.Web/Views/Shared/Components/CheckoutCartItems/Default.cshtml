@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CookIt.Web.ViewModels.ShoppingCart.CartItemsViewModel>
+
+<div class="card">
+        <table class="table table-hover shopping-cart-wrap">
+            <thead class="text-muted bg-dark">
+                <tr>
+                    <th scope="col" width="150">Recipe</th>
+                    <th scope="col" width="40">Portions</th>
+                    <th scope="col" width="250" class="text-center">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <figure class="media">
+                                <div class="img-wrap"><img src="@item.Image" class="img-thumbnail img-sm"></div>
+                                <figcaption class="media-body">
+                                    <h6 class="title text-truncate">@item.Name</h6>
+                                    <dl class="param param-inline small">
+                                        <dt>Ingredients: </dt>
+                                        <dd>@item.ListOfIngredients</dd>
+                                    </dl>
+                                </figcaption>
+                            </figure>
+                        </td>
+                        <td>
+                            <span class="text-success pl-4"> <i class="h5">@item.Portions</i> <i class="fa fa-users"></i></span>
+                        </td>
+                        <td>
+                            <div class="price-wrap">
+                                <var class="price text-center">@item.Price<i class="fa fa-euro fa-1x"></i></var>
+                            </div> <!-- price-wrap .// -->
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="text-center">
+                        <span><i class="h3">Total:  </i>  <i class="h3" style="color:#ff0000">@Model.Sum(x => x.Price).ToString("F2")</i> <i class="fa fa-euro fa-2x" style="color: #ff0000"></i></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> <!-- card.// -->

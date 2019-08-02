@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\CookIt.Services.Mapping\CookIt.Services.Mapping.csproj" />
     <ProjectReference Include="..\CookIt.Data.Common\CookIt.Data.Common.csproj" />
   </ItemGroup>
   

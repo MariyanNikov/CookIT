@@ -1,5 +1,6 @@
 ﻿namespace CookIt.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -27,6 +28,15 @@
             await this.shoppingCartItemsRepository.AddAsync(new ShoppingCartItem { ShoppingCartId = cart.Id, RecipeId = recipeId });
             await this.shoppingCartItemsRepository.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<ICollection<ShoppingCartItem>> CheckOutGetCartItems(string userId)
+        {
+            var cartId = this.shoppingCartRepository.All().SingleOrDefault(x => x.ApplicationUserId == userId).Id;
+
+            var cartItems = await this.shoppingCartItemsRepository.All().Include(x => x.Recipe).Where(x => x.ShoppingCartId == cartId).ToListAsync();
+
+            return cartItems;
         }
 
         public async Task<bool> ClearShoppingCart(string userId)
@@ -60,6 +70,13 @@
             var cartItemsCount = this.shoppingCartRepository.All().Include(x => x.CartItems).SingleOrDefault(x => x.ApplicationUserId == userId).CartItems.Count();
 
             return cartItemsCount;
+        }
+
+        public bool HasItemsInCart(string userId)
+        {
+            bool hasItems = this.shoppingCartRepository.All().Include(x => x.CartItems).SingleOrDefault(x => x.ApplicationUserId == userId).CartItems.Any();
+
+            return hasItems;
         }
 
         public bool IsInShoppingCart(string userId, int recipeId)

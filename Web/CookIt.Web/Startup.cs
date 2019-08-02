@@ -132,6 +132,7 @@
             services.AddTransient<IRecipeService, RecipeService>();
             services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
+            services.AddTransient<IOrderService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
