@@ -11,7 +11,9 @@
 
     public class CheckoutInputModel : IMapTo<Order>, IHaveCustomMappings, IValidatableObject
     {
-        private const string ErrorMessageDeliveryDate = "Delivery Date must be at least one day after the day you are placing the order.";
+        private const string ErrorMessageDeliveryDateDayAfterToday = "Delivery Date must be at least one day after the day you are placing the order.";
+        private const string ErrorMessageDeliveryDatePastDates = "You cannot choose dates from the past.";
+
 
         [Required]
         [Display(Name = "Delivery Date")]
@@ -37,6 +39,16 @@
         [BindNever]
         public string IssuerId { get; set; }
 
+        [BindNever]
+        public DateTime IssuedOn { get; set; }
+
+        [BindNever]
+        public int OrderStatusId { get; set; }
+
+        [BindNever]
+        public decimal TotalPrice { get; set; }
+
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<CheckoutInputModel, Order>()
@@ -46,9 +58,14 @@
 
         public IEnumerable<ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)
         {
+            if (this.DeliveryDate < DateTime.UtcNow)
+            {
+                yield return new ValidationResult(ErrorMessageDeliveryDatePastDates);
+            }
+
             if (this.DeliveryDate.Day <= DateTime.UtcNow.Day)
             {
-                yield return new ValidationResult(ErrorMessageDeliveryDate);
+                yield return new ValidationResult(ErrorMessageDeliveryDateDayAfterToday);
             }
         }
     }

@@ -1,13 +1,18 @@
 ﻿namespace CookIt.Web.Controllers
 {
+    using System;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
+    using CookIt.Common;
     using CookIt.Data.Models;
     using CookIt.Services.Data;
     using CookIt.Web.ViewModels.Order;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
 
     [Authorize]
     public class OrdersController : Controller
@@ -37,6 +42,7 @@
             model.FullName = this.User.FindFirstValue("FullName");
             var user = await this.userManager.GetUserAsync(this.User);
             model.PhoneNumber = await this.userManager.GetPhoneNumberAsync(user);
+            model.DeliveryDate = DateTime.UtcNow;
 
             return this.View(model);
         }
@@ -52,11 +58,35 @@
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             checkoutBindingModel.IssuerId = userId;
 
-            await this.orderService.Checkout<CheckoutInputModel>(checkoutBindingModel);
+            var pendingStatus = this.orderService.GetOrderStatusByName(GlobalConstants.PendingOrderStatus);
+            checkoutBindingModel.OrderStatusId = pendingStatus.Id;
 
-            // TODO: Clear the cart
+            checkoutBindingModel.IssuedOn = DateTime.UtcNow;
+
+            var shoppingCartItems = await this.shoppingCartService.CheckOutGetCartItems(userId);
+            checkoutBindingModel.TotalPrice = shoppingCartItems.Sum(x => x.Recipe.Price);
+
+            await this.orderService.Checkout<CheckoutInputModel>(checkoutBindingModel, userId);
+            await this.shoppingCartService.ClearShoppingCart(userId);
 
             return this.Redirect("/");
         }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName) &&
+                !this.User.IsInRole(GlobalConstants.CourierRoleName) &&
+                !this.orderService.HasOrderWithId(userId, id))
+            {
+                return this.Redirect("/");
+            }
+
+            var order = await this.orderService.FindOrderById<OrderDetailsViewModel>(id).SingleOrDefaultAsync();
+
+            return this.View(order);
+        }
+
     }
 }

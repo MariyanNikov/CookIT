@@ -9,14 +9,14 @@
         <div class="d-flex justify-content-center">
             <p class="h4 mb-4">Admins</p>
         </div>
-        <table class="table table-bordered border-info">
+        <table class="table table-bordered border-info table-hover">
             <partial name="_StatusMessage" for="@this.TempData["StatusMessage"]" />
-            <thead class="border-danger">
+            <thead class="thead-dark">
                 <tr>
                     <th scope="auto">#</th>
                     <th scope="auto">Email</th>
                     <th scope="auto">Full Name</th>
-                    <th scope="auto">Remove</th>
+                    <th scope="auto" class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>

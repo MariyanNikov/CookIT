@@ -20,6 +20,7 @@
         private const string SuccessMessageSoftDeleteRecipe = "You have successfully softly deleted recipe with id {0}.";
         private const string SuccessMessageUnDeleteRecipe = "You have successfully undeleted recipe with id {0}.";
         private const string SuccessMessageEditRecipe = "You have successfully edited {0} recipe.";
+
         private const int DefaultPageSize = 10;
         private const int DefaultPage = 1;
 

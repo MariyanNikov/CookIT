@@ -1,0 +1,70 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Common;
+
+@model IPagedList<CookIt.Web.ViewModels.Order.OrderAllViewModel>
+
+@if (Model.Count == 0)
+{
+    <div class="col-md-12 pt-2">
+        <div class="alert alert-dark" role="alert">
+            There are no pending orders.
+        </div>
+    </div>
+}
+else
+{
+    <div>
+        <partial name="_StatusMessage" for="@this.TempData["StatusMessage"]" />
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="table-responsive">
+            <table class="table table-bordered border-info table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="auto">#</th>
+                        <th scope="auto">Issued On</th>
+                        <th scope="auto">Status</th>
+                        <th scope="auto">Issuer</th>
+                        <th scope="auto">Delivery Date</th>
+                        <th scope="auto" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <th scope="row">@((i + 1) + ((Model.PageNumber - 1) * Model.PageSize))</th>
+                            <td>@Model[i].IssuedOn.ToString("D")</td>
+                            <td>@Model[i].OrderStatusName</td>
+                            <td>@Model[i].FullNameIssuer</td>
+                            <td>@Model[i].DeliveryDate.ToString("D")</td>
+                            <td>
+                                <form method="post">
+                                    <div class="row mr-1 d-flex justify-content-center">
+                                        <a asp-controller="Orders" asp-action="Details" asp-route-id="@Model[i].Id" class="col-md-3 btn btn-primary fa ml-1">Details<i class="fa fa-info-circle ml-1"></i></a>
+                                        <a asp-controller="Orders" asp-action="Confirm" asp-route-id="@Model[i].Id" class="col-md-3 btn btn-success fa ml-1">Confirm <i class="fa fa-check"></i></a>
+                                        <button type="submit" class="col-md-3 btn btn-danger fa ml-1 text-center" asp-controller="Orders" asp-action="Cancel" asp-route-id="@Model[i].Id">Cancel<i class="fa fa-close ml-1"></i></button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Pending",
+                                                                        new
+                                                                        {
+                                                                            p = page
+                                                                        }),
+                                                                        new PagedListRenderOptionsBase
+                                                                        {
+                                                                            MaximumPageNumbersToDisplay = 5,
+                                                                            LiElementClasses = new string[] { "page-item" },
+                                                                            PageClasses = new string[] { "page-link" }
+                                                                        })
+    </div>
+}

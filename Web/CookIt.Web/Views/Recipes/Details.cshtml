@@ -86,7 +86,7 @@
                 <h3 class="product-title">@Model.Name</h3>
                 <div class="rating">
                     <div class="stars mb-1">
-                        <span class="h5">@Model.TotalReviewScore.ToString("F2") </span>
+                        <span class="h5">Rating: @Model.TotalReviewScore.ToString("F2") </span>
                         @for (int i = 1; i <= 5; i++)
                         {
                             if (i < Model.TotalReviewScore + 0.99 && Model.TotalReviewScore < i && (int)Model.TotalReviewScore != 0 && (int)Model.TotalReviewScore != i)

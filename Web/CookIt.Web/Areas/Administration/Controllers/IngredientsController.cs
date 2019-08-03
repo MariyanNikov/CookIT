@@ -6,6 +6,7 @@
     using CookIt.Web.ViewModels.Ingridient;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using X.PagedList;
 
     public class IngredientsController : AdministrationController
     {
@@ -19,6 +20,9 @@
         private const string SuccessMessageCreateIngredient = "You have successfully created {0} ingredient.";
         private const string SuccessMessageRemoveIngredient = "You have successfully removed {0} ingredient.";
 
+        private const int DefaultPageSize = 10;
+        private const int DefaultPage = 1;
+
         private readonly IIngredientService ingredientService;
 
         public IngredientsController(IIngredientService ingredientService)
@@ -27,11 +31,15 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllIngredientTypes()
+        public async Task<IActionResult> AllIngredientTypes(int? p)
         {
+            var page = p ?? DefaultPage;
+
             var ingredientTypes = await this.ingredientService.GetAllIngreientTypes<AllIngredientTypeViewModel>().ToListAsync();
 
-            return this.View(ingredientTypes);
+            var pageIngredientTypes = ingredientTypes.ToPagedList(page, DefaultPageSize);
+
+            return this.View(pageIngredientTypes);
         }
 
         [HttpGet]
@@ -101,11 +109,15 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllIngredients()
+        public async Task<IActionResult> AllIngredients(int? p)
         {
+            var page = p ?? DefaultPage;
+
             var ingredients = await this.ingredientService.GetAllIngreients<AllIngredientViewModel>().ToListAsync();
 
-            return this.View(ingredients);
+            var pageIngredients = ingredients.ToPagedList(page, DefaultPageSize);
+
+            return this.View(pageIngredients);
         }
 
         [HttpPost(Name = "RemoveIngredient")]
