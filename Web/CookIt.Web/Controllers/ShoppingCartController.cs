@@ -28,7 +28,8 @@
             return this.View(cartItems);
         }
 
-        public async Task<IActionResult> AddToCart(int id, string returnUrl)
+        [HttpPost]
+        public async Task<IActionResult> AddToCart([FromRoute]int id, string returnUrl)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             returnUrl = returnUrl ?? "/";
@@ -43,11 +44,27 @@
             return this.Redirect(returnUrl);
         }
 
-        public async Task<IActionResult> RemoveFromCart(int id)
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart([FromRoute]int id)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             await this.shoppingCartService.RemoveShoppingCartItem(userId, id);
 
+            return this.RedirectToAction(nameof(this.Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Buy([FromRoute]int id)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (this.shoppingCartService.IsInShoppingCart(userId, id))
+            {
+                return this.RedirectToAction(nameof(this.Index));
+            }
+
+            await this.shoppingCartService.AddShoppingCartItem(userId, id);
+
+            this.TempData["CartItemAdded"] = true;
             return this.RedirectToAction(nameof(this.Index));
         }
     }

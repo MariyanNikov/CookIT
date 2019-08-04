@@ -402,3 +402,89 @@ var {
     max-height: 75px;
     object-fit: cover;
 }
+/* Tracker */
+
+tr.progtrckr {
+    margin: 0;
+    padding: 0;
+    list-style-type:none;
+}
+
+    tr.progtrckr td {
+        /*display: inline-block;*/
+        text-align: center;
+        line-height: 3.5em;
+    }
+
+    tr.progtrckr[data-progtrckr-steps="2"] td {
+        width: 49%;
+    }
+
+    tr.progtrckr[data-progtrckr-steps="3"] td {
+        width: 33%;
+    }
+
+    tr.progtrckr[data-progtrckr-steps="4"] td {
+        width: 24%;
+    }
+
+    tr.progtrckr[data-progtrckr-steps="5"] td {
+        width: 19%;
+    }
+
+    tr.progtrckr[data-progtrckr-steps="6"] td {
+        width: 16%;
+    }
+
+    tr.progtrckr[data-progtrckr-steps="7"] td {
+        width: 14%;
+    }
+
+    tr.progtrckr[data-progtrckr-steps="8"] td {
+        width: 12%;
+    }
+
+    tr.progtrckr[data-progtrckr-steps="9"] td {
+        width: 11%;
+    }
+
+    tr.progtrckr td.progtrckr-done {
+        color: black;
+        border-bottom: 4px solid yellowgreen;
+    }
+
+    tr.progtrckr td.progtrckr-todo {
+        color: silver;
+        border-bottom: 4px solid silver;
+    }
+
+    tr.progtrckr td:after {
+        content: "\00a0\00a0";
+    }
+
+    tr.progtrckr td:before {
+        position: relative;
+        bottom: -2.5em;
+        float: left;
+        left: 50%;
+        line-height: 1em;
+    }
+
+    tr.progtrckr td.progtrckr-done:before {
+        content: "\2713";
+        color: white;
+        background-color: yellowgreen;
+        height: 2.2em;
+        width: 2.2em;
+        line-height: 2.2em;
+        border: none;
+        border-radius: 2.2em;
+    }
+
+    tr.progtrckr td.progtrckr-todo:before {
+        content: "\039F";
+        color: silver;
+        background-color: white;
+        font-size: 2.2em;
+        bottom: -1.2em;
+    }

@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="img/fav-icon.png" type="image/x-icon" />
+    <link rel="icon" href="~/img/fav-icon.png" type="image/x-icon" />
     <title>@this.ViewData["Title"] - CookIt</title>
 
     <environment names="Development">
@@ -78,7 +78,7 @@
                         </ul>
                         @if (this.TempData["CartItemAdded"] != null)
                         {
-                            <ul class="mt-3">
+                            <ul class="mt-3" style="position:fixed;top:2%;right:0%">
                                 <li>
                                     <span class="alert alert-success alert-dismissible" style="width:25%">
                                         Recipe Added.
@@ -102,7 +102,7 @@
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Blog</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Blog</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Orders" asp-action="MyOrders">My Orders</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
                     </ul>
                     @if (this.User.Identity.IsAuthenticated)

@@ -16,10 +16,10 @@
                 return;
             }
 
-            await dbContext.OrderStatuses.AddAsync(new OrderStatus { Name = GlobalConstants.PendingOrderStatus});
+            await dbContext.OrderStatuses.AddAsync(new OrderStatus { Name = GlobalConstants.PendingOrderStatus });
             await dbContext.OrderStatuses.AddAsync(new OrderStatus { Name = GlobalConstants.ProcessedOrderStatus });
             await dbContext.OrderStatuses.AddAsync(new OrderStatus { Name = GlobalConstants.GettingIngredientsOrderStatus });
-            await dbContext.OrderStatuses.AddAsync(new OrderStatus { Name = GlobalConstants.DeliveringOrderStatus});
+            await dbContext.OrderStatuses.AddAsync(new OrderStatus { Name = GlobalConstants.DeliveringOrderStatus });
             await dbContext.OrderStatuses.AddAsync(new OrderStatus { Name = GlobalConstants.AcquiredOrderStatus });
         }
     }

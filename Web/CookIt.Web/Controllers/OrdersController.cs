@@ -38,6 +38,7 @@
             {
                 return this.Redirect("/");
             }
+
             var model = new CheckoutInputModel();
             model.FullName = this.User.FindFirstValue("FullName");
             var user = await this.userManager.GetUserAsync(this.User);
@@ -88,5 +89,13 @@
             return this.View(order);
         }
 
+        public async Task<IActionResult> MyOrders()
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var orders = await this.orderService.GetAllOrdersByUserId<MyOrdersViewModel>(userId).ToListAsync();
+
+            return this.View(orders);
+        }
     }
 }

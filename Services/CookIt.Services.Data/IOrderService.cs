@@ -27,6 +27,8 @@
 
         IQueryable<TModel> GetRecipesFromOrder<TModel>(string orderId);
 
-        bool HasOrderWithId(string userId,string orderId);
+        bool HasOrderWithId(string userId, string orderId);
+
+        IQueryable<TModel> GetAllOrdersByUserId<TModel>(string userId);
     }
 }

@@ -143,27 +143,28 @@ $(function () {
     });
 });
 
+$(function () {
+    var $star_rating = $('.star-rating .fa');
 
-var $star_rating = $('.star-rating .fa');
+    var SetRatingStar = function () {
+        return $star_rating.each(function () {
+            if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+                return $(this).addClass('reviewStarClicked');
+            } else {
+                return $(this).removeClass('reviewStarClicked');
+            }
+        });
+    };
 
-var SetRatingStar = function () {
-    return $star_rating.each(function () {
-        if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
-            return $(this).addClass('reviewStarClicked');
-        } else {
-            return $(this).removeClass('reviewStarClicked');
-        }
+    $star_rating.on('click', function () {
+        $star_rating.siblings('#starsValue').val($(this).data('rating'));
+
+        return SetRatingStar();
     });
-};
 
-$star_rating.on('click', function () {
-    $star_rating.siblings('#starsValue').val($(this).data('rating'));
+    SetRatingStar();
+    $(document).ready(function () {
 
-    return SetRatingStar();
-});
-
-SetRatingStar();
-$(document).ready(function () {
+    });
 
 });
-

@@ -19,7 +19,5 @@
         public const string DeliveringOrderStatus = "Delivering";
 
         public const string AcquiredOrderStatus = "Acquired";
-
-
     }
 }

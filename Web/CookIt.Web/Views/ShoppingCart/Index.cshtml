@@ -50,8 +50,12 @@
                                                     </div> <!-- price-wrap .// -->
                                                 </td>
                                                 <td class="text-right">
-                                                    <a href="/Recipes/Details/@cartItem.Id" class="btn btn-success"> Details</a>
-                                                    <a href="/ShoppingCart/RemoveFromCart/@cartItem.Id" class="btn btn-danger ml-2"> Remove ×</a>
+                                                    <div class="row justify-content-center">
+                                                            <a href="/Recipes/Details/@cartItem.Id" class="btn btn-success"> Details</a>
+                                                            <form method="post" asp-action="RemoveFromCart" asp-controller="ShoppingCart" asp-route-id="@cartItem.Id">
+                                                                <button type="submit" class="btn btn-danger ml-2"> Remove ×</button>
+                                                            </form>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         }

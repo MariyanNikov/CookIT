@@ -1,9 +1,10 @@
 ﻿namespace CookIt.Services.Data
 {
-    using CookIt.Data.Models;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using CookIt.Data.Models;
 
     public interface IShoppingCartService
     {

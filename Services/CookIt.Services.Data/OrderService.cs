@@ -134,5 +134,12 @@
 
             return userId == order.IssuerId;
         }
+
+        public IQueryable<TModel> GetAllOrdersByUserId<TModel>(string userId)
+        {
+            var orders = this.orderRepository.All().Where(x => x.IssuerId == userId).To<TModel>();
+
+            return orders;
+        }
     }
 }

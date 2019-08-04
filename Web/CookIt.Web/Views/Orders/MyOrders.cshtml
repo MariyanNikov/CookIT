@@ -1,0 +1,168 @@
+﻿@using CookIt.Common;
+@model List<CookIt.Web.ViewModels.Order.MyOrdersViewModel>
+@{
+    ViewData["Title"] = "My Orders";
+
+    var activeOrders = Model.Where(x => x.OrderStatusName != GlobalConstants.AcquiredOrderStatus).ToList();
+    var finishedOrders = Model.Where(x => x.OrderStatusName == GlobalConstants.AcquiredOrderStatus).ToList();
+}
+<div class="card" style="background: #eee">
+    <div class="m-3">
+        <h3 class="text-center"> My Active Orders </h3>
+        @if (!activeOrders.Any())
+        {
+            <div class="col-md-12 pt-2">
+                <div class="alert alert-dark" role="alert">
+                    There are no active orders.
+                </div>
+            </div>
+        }
+        else
+        {
+            @*<div>
+                    <partial name="_StatusMessage" for="@this.TempData["StatusMessage"]" />
+                </div>*@
+            <div class="d-flex justify-content-center mt-3">
+                <div class="table-responsive">
+                    <table class="table table-bordered border-info table-hover">
+                        <thead class="thead-dark">
+                            <tr class="text-center">
+                                <th scope="auto">#</th>
+                                <th scope="auto">Delivery Address</th>
+                                <th scope="auto">Delivery Date</th>
+                                <th scope="auto">Courier</th>
+                                <th scope="auto">Price</th>
+                                <th scope="auto">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody style="background:white">
+                            @for (int i = 0; i < activeOrders.Count; i++)
+                            {
+                                <tr class="text-center">
+                                    <th scope="row">@(i + 1)</th>
+                                    <td><b>@activeOrders[i].DeliveryAddress</b></td>
+                                    <td><b>@activeOrders[i].DeliveryDate.ToString("D")</b></td>
+                                    <td><b>@(activeOrders[i].Courier ?? "TBD")</b></td>
+                                    <td class="text-danger h5">@activeOrders[i].TotalPrice <i class="fa fa-euro"></i></td>
+                                    <td class="text-center">
+                                        <a asp-controller="Orders" asp-action="Details" asp-route-id="@activeOrders[i].Id" class="btn btn-primary fa ml-1">Details<i class="fa fa-info-circle ml-1"></i></a>
+                                    </td>
+                                </tr>
+                                {
+                                    var Statuses = new string[] {
+                                            GlobalConstants.PendingOrderStatus,
+                                            GlobalConstants.ProcessedOrderStatus,
+                                            GlobalConstants.GettingIngredientsOrderStatus,
+                                            GlobalConstants.DeliveringOrderStatus,
+                                            GlobalConstants.AcquiredOrderStatus};
+
+                                    bool isDone = true;
+
+                                    <tr class="progtrckr" data-progtrckr-steps="5">
+                                        <th scope="row"></th>
+                                        @for (int j = 0; j < Statuses.Length; j++)
+                                        {
+                                            if (isDone)
+                                            {
+                                                <td class="progtrckr-done"><b>@Statuses[j]</b></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="progtrckr-todo"><b>@Statuses[j]</b></td>
+                                            }
+
+                                            if (activeOrders[i].OrderStatusName.ToLower() == Statuses[j].ToLower())
+                                            {
+                                                isDone = false;
+                                            }
+                                        }
+                                        
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="m-3">
+        <h3 class="text-center"> History </h3>
+        @if (!finishedOrders.Any())
+        {
+            <div class="col-md-12 pt-2">
+                <div class="alert alert-dark" role="alert">
+                    You have no completed orders.
+                </div>
+            </div>
+        }
+        else
+        {
+            @*<div>
+                <partial name="_StatusMessage" for="@this.TempData["StatusMessage"]" />
+            </div>*@
+            <div class="d-flex justify-content-center mt-3">
+                <div class="table-responsive">
+                    <table class="table table-bordered border-info table-hover">
+                        <thead class="thead-dark">
+                            <tr class="text-center">
+                                <th scope="auto">#</th>
+                                <th scope="auto">Delivery Address</th>
+                                <th scope="auto">Delivery Date</th>
+                                <th scope="auto">Courier</th>
+                                <th scope="auto">Price</th>
+                                <th scope="auto">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody style="background:white">
+                            @for (int i = 0; i < activeOrders.Count; i++)
+                            {
+                                <tr class="text-center">
+                                    <th scope="row">@(i + 1)</th>
+                                    <td><b>@finishedOrders[i].DeliveryAddress</b></td>
+                                    <td><b>@finishedOrders[i].DeliveryDate.ToString("D")</b></td>
+                                    <td><b>@(finishedOrders[i].Courier ?? "TBD")</b></td>
+                                    <td class="text-danger h5">@finishedOrders[i].TotalPrice <i class="fa fa-euro"></i></td>
+                                    <td class="text-center">
+                                        <a asp-controller="Orders" asp-action="Details" asp-route-id="@finishedOrders[i].Id" class="btn btn-primary fa ml-1">Details<i class="fa fa-info-circle ml-1"></i></a>
+                                    </td>
+                                </tr>
+                                {
+                                    var Statuses = new string[] {
+                                            GlobalConstants.PendingOrderStatus,
+                                            GlobalConstants.ProcessedOrderStatus,
+                                            GlobalConstants.GettingIngredientsOrderStatus,
+                                            GlobalConstants.DeliveringOrderStatus,
+                                            GlobalConstants.AcquiredOrderStatus};
+
+                                    bool isDone = true;
+
+                                    <tr class="progtrckr" data-progtrckr-steps="5">
+                                        <th scope="row"></th>
+                                        @for (int j = 0; j < Statuses.Length; j++)
+                                        {
+                                            if (isDone)
+                                            {
+                                                <td class="progtrckr-done"><b>@Statuses[j]</b></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="progtrckr-todo"><b>@Statuses[j]</b></td>
+                                            }
+
+                                            if (finishedOrders[i].OrderStatusName.ToLower() == Statuses[j].ToLower())
+                                            {
+                                                isDone = false;
+                                            }
+                                        }
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -14,7 +14,6 @@
         private const string ErrorMessageDeliveryDateDayAfterToday = "Delivery Date must be at least one day after the day you are placing the order.";
         private const string ErrorMessageDeliveryDatePastDates = "You cannot choose dates from the past.";
 
-
         [Required]
         [Display(Name = "Delivery Date")]
         public DateTime DeliveryDate { get; set; } = DateTime.UtcNow.AddDays(1);
@@ -47,7 +46,6 @@
 
         [BindNever]
         public decimal TotalPrice { get; set; }
-
 
         public void CreateMappings(IProfileExpression configuration)
         {
