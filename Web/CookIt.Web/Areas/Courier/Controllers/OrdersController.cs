@@ -51,6 +51,7 @@
             var orders = await this.orderService
                 .GetAllOrders<OrderAllViewModel>()
                 .Where(x => x.OrderStatusName.ToLower() == GlobalConstants.ProcessedOrderStatus.ToLower())
+                .OrderByDescending(x => x.IssuedOn)
                 .ToPagedListAsync(page, DefaultPageSize);
 
             return this.View(orders);
@@ -83,6 +84,7 @@
                 .GetAllOrders<OrderAllViewModel>()
                 .Where(x => x.OrderStatusName.ToLower() == GlobalConstants.GettingIngredientsOrderStatus.ToLower())
                 .Where(x => x.CourierId == courierId)
+                .OrderByDescending(x => x.IssuedOn)
                 .ToPagedListAsync(page, DefaultPageSize);
 
             return this.View(orders);
@@ -121,6 +123,7 @@
                 .GetAllOrders<OrderAllViewModel>()
                 .Where(x => x.OrderStatusName.ToLower() == GlobalConstants.DeliveringOrderStatus.ToLower())
                 .Where(x => x.CourierId == courierId)
+                .OrderByDescending(x => x.IssuedOn)
                 .ToPagedListAsync(page, DefaultPageSize);
 
             return this.View(orders);

@@ -34,13 +34,15 @@
             this.emailSender = emailSender;
         }
 
-        public async Task<IActionResult> AllOrders(int? p)
+        public async Task<IActionResult> Active(int? p)
         {
             var page = p ?? DefaultPage;
 
             var orders = await this.orderService
                 .GetAllOrders<OrderAllViewModel>()
-                .Where(x => x.OrderStatusName.ToLower() != GlobalConstants.PendingOrderStatus.ToLower())
+                .Where(x => x.OrderStatusName.ToLower() != GlobalConstants.PendingOrderStatus.ToLower() &&
+                        x.OrderStatusName.ToLower() != GlobalConstants.AcquiredOrderStatus.ToLower())
+                .OrderByDescending(x => x.IssuedOn)
                 .ToPagedListAsync(page, DefaultPageSize);
 
             return this.View(orders);
@@ -53,6 +55,20 @@
             var orders = await this.orderService
                 .GetAllOrders<OrderAllViewModel>()
                 .Where(x => x.OrderStatusName.ToLower() == GlobalConstants.PendingOrderStatus.ToLower())
+                .OrderByDescending(x => x.IssuedOn)
+                .ToPagedListAsync(page, DefaultPageSize);
+
+            return this.View(orders);
+        }
+
+        public async Task<IActionResult> Finished(int? p)
+        {
+            var page = p ?? DefaultPage;
+
+            var orders = await this.orderService
+                .GetAllOrders<OrderAllViewModel>()
+                .Where(x => x.OrderStatusName.ToLower() == GlobalConstants.AcquiredOrderStatus.ToLower())
+                .OrderByDescending(x => x.IssuedOn)
                 .ToPagedListAsync(page, DefaultPageSize);
 
             return this.View(orders);
@@ -63,13 +79,13 @@
             if (!this.orderService.IsPending(id))
             {
                 this.TempData["StatusMessage"] = ErrorMessageOrderAlreadyProcessed;
-                return this.RedirectToAction(nameof(this.AllOrders));
+                return this.RedirectToAction(nameof(this.Active));
             }
 
             await this.orderService.ConfirmOrder(id);
 
             this.TempData["StatusMessage"] = string.Format(SuccessMessageOrderConfirmed, id);
-            return this.RedirectToAction(nameof(this.AllOrders));
+            return this.RedirectToAction(nameof(this.Active));
         }
 
         public async Task<IActionResult> Cancel(string id)
@@ -77,7 +93,7 @@
             if (!this.orderService.IsPending(id))
             {
                 this.TempData["StatusMessage"] = ErrorMessageCancelProcessedOrder;
-                return this.RedirectToAction(nameof(this.AllOrders));
+                return this.RedirectToAction(nameof(this.Active));
             }
 
             var issuerEmail = this.orderService.GetIssuerEmailByOrderId(id);

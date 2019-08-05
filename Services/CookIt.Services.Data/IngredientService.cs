@@ -139,5 +139,15 @@
 
             return false;
         }
+
+        public bool HasIngredientWithType(int ingredientTypeId)
+        {
+            return this.ingredientTypeRepository.All().Include(x => x.Ingredients).SingleOrDefault(x => x.Id == ingredientTypeId).Ingredients.Any();
+        }
+
+        public bool HasRecipeWithIngredient(int ingredientId)
+        {
+            return this.ingredientRepository.All().Include(x => x.RecipeIngredients).SingleOrDefault(x => x.Id == ingredientId).RecipeIngredients.Any();
+        }
     }
 }

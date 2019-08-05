@@ -15,6 +15,8 @@
         private const string ErrorMessageInvalidIngredientType = "Invalid ingredient type.";
         private const string ErrorMessageIngredientDoesNotExist = "Ingredient with name: {0} does not exist.";
         private const string ErrorMessageIngredientAlreadyExists = "Ingredient with name: {0} already exists.";
+        private const string ErrorMessageIngredientTypeAlreadyUsed = "You cannot delete Ingedient Type which is already been used in Ingredient.";
+        private const string ErrorMessageIngredientAlreadyUsed = "You cannot delete Ingedient which is already been used in Recipe.";
         private const string SuccessMessageCreateIngredientType = "You have successfully created {0} ingredient type.";
         private const string SuccessMessageRemoveIngredientType = "You have successfully removed {0} ingredient type.";
         private const string SuccessMessageCreateIngredient = "You have successfully created {0} ingredient.";
@@ -74,6 +76,12 @@
                 return this.RedirectToAction("AllIngredientTypes", "Ingredients");
             }
 
+            if (this.ingredientService.HasIngredientWithType(id))
+            {
+                this.TempData["StatusMessage"] = ErrorMessageIngredientTypeAlreadyUsed;
+                return this.RedirectToAction("AllIngredientTypes", "Ingredients");
+            }
+
             await this.ingredientService.RemoveIngredientTypeById(id);
 
             this.TempData["StatusMessage"] = string.Format(SuccessMessageRemoveIngredientType, ingredientName);
@@ -128,6 +136,12 @@
             if (ingredientName == null)
             {
                 this.TempData["StatusMessage"] = string.Format(ErrorMessageIngredientDoesNotExist, ingredientName);
+                return this.RedirectToAction("AllIngredients", "Ingredients");
+            }
+
+            if (this.ingredientService.HasRecipeWithIngredient(id))
+            {
+                this.TempData["StatusMessage"] = ErrorMessageIngredientAlreadyUsed;
                 return this.RedirectToAction("AllIngredients", "Ingredients");
             }
 

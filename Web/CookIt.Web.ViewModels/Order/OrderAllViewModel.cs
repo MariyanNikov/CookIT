@@ -22,10 +22,13 @@
 
         public string CourierId { get; set; }
 
+        public string CourierFullName { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Order, OrderAllViewModel>()
-           .ForMember(x => x.Address, opt => opt.MapFrom(c => string.Join(" - ", c.Address.StreetAddress, c.Address.City, c.Address.CityCode)));
+           .ForMember(x => x.Address, opt => opt.MapFrom(c => string.Join(" - ", c.Address.StreetAddress, c.Address.City, c.Address.CityCode)))
+           .ForMember(x => x.CourierFullName, opt => opt.MapFrom(c => c.Courier.FirstName + " " + c.Courier.LastName));
         }
     }
 }

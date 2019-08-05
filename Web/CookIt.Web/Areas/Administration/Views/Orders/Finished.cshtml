@@ -1,0 +1,67 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Common;
+
+@model IPagedList<CookIt.Web.ViewModels.Order.OrderAllViewModel>
+
+@{
+    ViewData["Title"] = "Finished Orders";
+}
+
+@if (Model.Count == 0)
+{
+    <div class="col-md-12 pt-2">
+        <div class="alert alert-dark" role="alert">
+            There are no finished orders.
+        </div>
+    </div>
+}
+else
+{
+    <div class="d-flex justify-content-center">
+        <div class="table-responsive">
+            <table class="table table-bordered border-info table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="auto">#</th>
+                        <th scope="auto">Issued On</th>
+                        <th scope="auto">Status</th>
+                        <th scope="auto">Issuer</th>
+                        <th scope="auto">Delivery Date</th>
+                        <th scope="auto">Courier</th>
+                        <th scope="auto" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <th scope="row">@((i + 1) + ((Model.PageNumber - 1) * Model.PageSize))</th>
+                            <td>@Model[i].IssuedOn.ToString("D")</td>
+                            <td class="text-danger"><b>@Model[i].OrderStatusName</b></td>
+                            <td>@Model[i].FullNameIssuer</td>
+                            <td>@Model[i].DeliveryDate.ToString("D")</td>
+                            <td>@Model[i].CourierFullName</td>
+                            <td class="text-center">
+                                <a asp-controller="Orders" asp-action="Details" asp-route-id="@Model[i].Id" class="btn btn-primary fa ml-1">Details<i class="fa fa-info-circle ml-1"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Finished",
+                                                                        new
+                                                                        {
+                                                                            p = page
+                                                                        }),
+                                                                        new PagedListRenderOptionsBase
+                                                                        {
+                                                                            MaximumPageNumbersToDisplay = 5,
+                                                                            LiElementClasses = new string[] { "page-item" },
+                                                                            PageClasses = new string[] { "page-link" }
+                                                                        })
+    </div>
+}

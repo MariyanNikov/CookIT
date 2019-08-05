@@ -30,5 +30,9 @@
         Task<bool> RemoveIngredientById(int id);
 
         Task<bool> CheckExistingIngredientId(ICollection<int> ingredientIds);
+
+        bool HasIngredientWithType(int ingredientTypeId);
+
+        bool HasRecipeWithIngredient(int ingredientId);
     }
 }
