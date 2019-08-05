@@ -1,8 +1,9 @@
 ﻿namespace CookIt.Web.Areas.Administration.Controllers
 {
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-
+    using CookIt.Common;
     using CookIt.Services.Data;
     using CookIt.Web.ViewModels.Order;
     using Microsoft.AspNetCore.Identity.UI.Services;
@@ -37,22 +38,24 @@
         {
             var page = p ?? DefaultPage;
 
-            var orders = await this.orderService.GetAllProcessedOrders<OrderAllViewModel>().ToListAsync();
+            var orders = await this.orderService
+                .GetAllOrders<OrderAllViewModel>()
+                .Where(x => x.OrderStatusName.ToLower() != GlobalConstants.PendingOrderStatus.ToLower())
+                .ToPagedListAsync(page, DefaultPageSize);
 
-            var pageOrders = orders.ToPagedList(page, DefaultPageSize);
-
-            return this.View(pageOrders);
+            return this.View(orders);
         }
 
         public async Task<IActionResult> Pending(int? p)
         {
             var page = p ?? DefaultPage;
 
-            var orders = await this.orderService.GetAllPendingOrders<OrderAllViewModel>().ToListAsync();
+            var orders = await this.orderService
+                .GetAllOrders<OrderAllViewModel>()
+                .Where(x => x.OrderStatusName.ToLower() == GlobalConstants.PendingOrderStatus.ToLower())
+                .ToPagedListAsync(page, DefaultPageSize);
 
-            var pageOrders = orders.ToPagedList(page, DefaultPageSize);
-
-            return this.View(pageOrders);
+            return this.View(orders);
         }
 
         public async Task<IActionResult> Confirm(string id)

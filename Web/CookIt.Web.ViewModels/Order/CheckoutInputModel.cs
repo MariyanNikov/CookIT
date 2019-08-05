@@ -56,7 +56,7 @@
 
         public IEnumerable<ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)
         {
-            if (this.DeliveryDate < DateTime.UtcNow)
+            if (this.DeliveryDate.Day < DateTime.UtcNow.Day)
             {
                 yield return new ValidationResult(ErrorMessageDeliveryDatePastDates);
             }

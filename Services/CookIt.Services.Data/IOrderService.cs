@@ -11,10 +11,6 @@
 
         OrderStatus GetOrderStatusByName(string orderStatusName);
 
-        IQueryable<TModel> GetAllProcessedOrders<TModel>();
-
-        IQueryable<TModel> GetAllPendingOrders<TModel>();
-
         Task<bool> ConfirmOrder(string orderId);
 
         bool IsPending(string orderId);
@@ -30,5 +26,20 @@
         bool HasOrderWithId(string userId, string orderId);
 
         IQueryable<TModel> GetAllOrdersByUserId<TModel>(string userId);
+
+        bool HasOrderWithAddressId(int addressId);
+
+        IQueryable<TModel> GetAllOrders<TModel>();
+
+        Task<bool> TakeOrder(string orderId, string courierId);
+
+        Task<bool> DeliverOrder(string orderId);
+
+        bool IsAtStatus(string orderId, string statusName);
+
+        Task<bool> AcquiredOrder(string orderId);
+
+        string GetAllRecipesInstructionsForOrder(string id);
+
     }
 }

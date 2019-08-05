@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using CookIt.Data.Models;
+    using CookIt.Services.Data;
     using CookIt.Services.Data.ApplicationUser;
     using CookIt.Web.ViewModels.Address;
     using Microsoft.AspNetCore.Identity;
@@ -16,18 +17,25 @@
     public class AddressesModel : PageModel
 #pragma warning restore SA1649 // File name should match first type name
     {
+        private const string ErrorMessageAddressAlreadyUsed = "This address is already been used in an order.";
+        private const string SuccessMessageRemovedAddress = "Removed address.";
+        private const string SuccessMessageAddedAddress = "Added new address.";
+
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IApplicationUserService applicationUserService;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IOrderService orderService;
 
         public AddressesModel(
             UserManager<ApplicationUser> userManager,
             IApplicationUserService applicationUserService,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IOrderService orderService)
         {
             this.userManager = userManager;
             this.applicationUserService = applicationUserService;
             this.signInManager = signInManager;
+            this.orderService = orderService;
         }
 
         [TempData]
@@ -74,7 +82,7 @@
                 return this.Redirect(returnUrl);
             }
 
-            this.StatusMessage = "Added new address.";
+            this.StatusMessage = SuccessMessageAddedAddress;
             return this.RedirectToPage();
         }
 
@@ -93,9 +101,15 @@
                 return this.NotFound($"Unable to find address with ID '{id}'.");
             }
 
+            if (this.orderService.HasOrderWithAddressId(id))
+            {
+                this.StatusMessage = ErrorMessageAddressAlreadyUsed;
+                return this.RedirectToPage();
+            }
+
             await this.applicationUserService.RemoveAddressById(id);
 
-            this.StatusMessage = "Removed address.";
+            this.StatusMessage = SuccessMessageRemovedAddress;
             return this.RedirectToPage();
         }
     }

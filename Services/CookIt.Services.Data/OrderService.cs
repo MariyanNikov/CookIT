@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -55,21 +56,13 @@
             return true;
         }
 
-        public IQueryable<TModel> GetAllProcessedOrders<TModel>()
+        public IQueryable<TModel> GetAllOrders<TModel>()
         {
-            var pendingStatus = this.GetOrderStatusByName(GlobalConstants.PendingOrderStatus);
-            var orders = this.orderRepository.All().Where(x => x.OrderStatusId != pendingStatus.Id).To<TModel>();
+            var orders = this.orderRepository.All().To<TModel>();
 
             return orders;
         }
 
-        public IQueryable<TModel> GetAllPendingOrders<TModel>()
-        {
-            var pendingStatus = this.GetOrderStatusByName(GlobalConstants.PendingOrderStatus);
-            var orders = this.orderRepository.All().Where(x => x.OrderStatusId == pendingStatus.Id).To<TModel>();
-
-            return orders;
-        }
 
         public OrderStatus GetOrderStatusByName(string orderStatusName)
         {
@@ -140,6 +133,78 @@
             var orders = this.orderRepository.All().Where(x => x.IssuerId == userId).To<TModel>();
 
             return orders;
+        }
+
+        public bool HasOrderWithAddressId(int addressId)
+        {
+            return this.orderRepository.All().Any(x => x.AddressId == addressId);
+        }
+
+        public async Task<bool> TakeOrder(string orderId, string courierId)
+        {
+            var order = this.orderRepository.All().SingleOrDefault(x => x.Id == orderId);
+            var gettingIngredientsStatus = this.orderStatusRepository.All().SingleOrDefault(x => x.Name == GlobalConstants.GettingIngredientsOrderStatus);
+
+            order.CourierId = courierId;
+            order.OrderStatusId = gettingIngredientsStatus.Id;
+
+            this.orderRepository.Update(order);
+            await this.orderRepository.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> DeliverOrder(string orderId)
+        {
+            var order = this.orderRepository.All().SingleOrDefault(x => x.Id == orderId);
+            var deliveringStatus = this.orderStatusRepository.All().SingleOrDefault(x => x.Name == GlobalConstants.DeliveringOrderStatus);
+
+            order.OrderStatusId = deliveringStatus.Id;
+
+            this.orderRepository.Update(order);
+            await this.orderRepository.SaveChangesAsync();
+
+            return true;
+        }
+
+        public bool IsAtStatus(string orderId, string statusName)
+        {
+            var order = this.orderRepository.All().Include(x => x.OrderStatus).SingleOrDefault(x => x.Id == orderId);
+
+            return order.OrderStatus.Name == statusName;
+        }
+
+        public async Task<bool> AcquiredOrder(string orderId)
+        {
+            var order = this.orderRepository.All().SingleOrDefault(x => x.Id == orderId);
+            var acquiredStatus = this.orderStatusRepository.All().SingleOrDefault(x => x.Name == GlobalConstants.AcquiredOrderStatus);
+
+            order.OrderStatusId = acquiredStatus.Id;
+
+            this.orderRepository.Update(order);
+            await this.orderRepository.SaveChangesAsync();
+
+            return true;
+        }
+
+        public string GetAllRecipesInstructionsForOrder(string id)
+        {
+            var order = this.orderRepository
+                .All()
+                .Include(x => x.OrderRecipes)
+                .ThenInclude(c => c.Recipe)
+                .SingleOrDefault(x => x.Id == id);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var recipe in order.OrderRecipes)
+            {
+                sb.AppendLine($"{recipe.Recipe.Name}:");
+                sb.AppendLine($"{recipe.Recipe.RecipeInstructions}");
+                sb.AppendLine(Environment.NewLine);
+            }
+
+            return sb.ToString().TrimEnd();
         }
     }
 }

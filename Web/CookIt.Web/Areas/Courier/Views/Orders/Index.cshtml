@@ -1,11 +1,12 @@
 ﻿@using CookIt.Data.Extensions
+
 @{
-    this.ViewData["Title"] = "Admin dashboard";
+    ViewData["Title"] = "Courier dashboard";
 }
 
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <h1 class="display-4">Hello, @(this.User.Identity.GetFullName())</h1>
-        <p class="lead">You can choose what to administrate from the menu on the left.</p>
+        <p class="lead">You can see everything about the orders to deliver on the left menu.</p>
     </div>
 </div>

@@ -1,0 +1,130 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Common;
+
+@model IPagedList<CookIt.Web.ViewModels.Order.OrderAllViewModel>
+
+@{
+    ViewData["Title"] = "To Deliver Orders";
+    var dailyToDeliverOrders = Model.Where(x => x.DeliveryDate.Day == DateTime.UtcNow.Day).ToList();
+    var otherToDeliverOrders = Model.Where(x => x.DeliveryDate.Day != DateTime.UtcNow.Day).ToPagedList();
+}
+    <div class="m-3">
+        <partial name="_StatusMessage" for="@this.TempData["StatusMessage"]" />
+    </div>
+<h3 class="d-flex justify-content-center m-3">
+    Daily Processed Orders
+</h3>
+@if (dailyToDeliverOrders.Count == 0)
+{
+    <div class="col-md-12 pt-2">
+        <div class="alert alert-dark" role="alert">
+            There are no orders to deliver today.
+        </div>
+    </div>
+}
+else
+{
+
+    <div class="d-flex justify-content-center">
+        <div class="table-responsive">
+            <table class="table table-bordered border-info table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="auto">#</th>
+                        <th scope="auto">Issuer</th>
+                        <th scope="auto">Delivery Date</th>
+                        <th scope="auto">Address</th>
+                        <th scope="auto">Status</th>
+                        <th scope="auto" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < dailyToDeliverOrders.Count; i++)
+                    {
+                        <tr>
+                            <th scope="row">@((i + 1))</th>
+                            <td>@dailyToDeliverOrders[i].FullNameIssuer</td>
+                            <td>@dailyToDeliverOrders[i].DeliveryDate.ToString("D")</td>
+                            <td>@dailyToDeliverOrders[i].Address</td>
+                            <td class="text-success"><b>@dailyToDeliverOrders[i].OrderStatusName</b></td>
+                            <td class="text-center">
+                                <form method="post">
+                                    <div class="row mr-1 d-flex justify-content-center">
+                                        <a asp-controller="Orders" asp-action="Details" asp-route-id="@dailyToDeliverOrders[i].Id" class="btn btn-primary col-md-5 fa ml-1">Details<i class="fa fa-info-circle ml-1"></i></a>
+                                        <button type="submit" class="col-md-5 btn btn-success fa ml-1" asp-controller="Orders" asp-action="Deliver" asp-route-id="@dailyToDeliverOrders[i].Id">Deliver <i class="fa fa-truck"></i></button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<h3 class="d-flex justify-content-center m-3">
+    Other Processed Orders
+</h3>
+@if (otherToDeliverOrders.Count == 0)
+{
+    <div class="col-md-12 pt-2">
+        <div class="alert alert-dark" role="alert">
+            There are no orders to deliver.
+        </div>
+    </div>
+}
+else
+{
+    <div class="d-flex justify-content-center">
+        <div class="table-responsive">
+            <table class="table table-bordered border-info table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="auto">#</th>
+                        <th scope="auto">Issuer</th>
+                        <th scope="auto">Delivery Date</th>
+                        <th scope="auto">Address</th>
+                        <th scope="auto">Status</th>
+                        <th scope="auto" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < otherToDeliverOrders.Count; i++)
+                    {
+                        <tr>
+                            <th scope="row">@((i + 1) + ((Model.PageNumber - 1) * Model.PageSize))</th>
+                            <td>@otherToDeliverOrders[i].FullNameIssuer</td>
+                            <td>@otherToDeliverOrders[i].DeliveryDate.ToString("D")</td>
+                            <td>@otherToDeliverOrders[i].Address</td>
+                            <td class="text-success"><b>@otherToDeliverOrders[i].OrderStatusName</b></td>
+                            <td class="text-center">
+                                <form method="post">
+                                    <div class="row mr-1 d-flex justify-content-center">
+                                        <a asp-controller="Orders" asp-action="Details" asp-route-id="@otherToDeliverOrders[i].Id" class="btn btn-primary col-md-5 fa ml-1">Details<i class="fa fa-info-circle ml-1"></i></a>
+                                        <button type="submit" class="col-md-5 btn btn-success fa ml-1" asp-controller="Orders" asp-action="Deliver" asp-route-id="@otherToDeliverOrders[i].Id">Deliver <i class="fa fa-truck"></i></button>
+                                    </div>
+                                </form>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        @Html.PagedListPager((IPagedList)otherToDeliverOrders, page => Url.Action("ToDeliver",
+                                                                        new
+                                                                        {
+                                                                            p = page
+                                                                        }),
+                                                                        new PagedListRenderOptionsBase
+                                                                        {
+                                                                            MaximumPageNumbersToDisplay = 5,
+                                                                            LiElementClasses = new string[] { "page-item" },
+                                                                            PageClasses = new string[] { "page-link" }
+                                                                        })
+    </div>
+}
