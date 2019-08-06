@@ -1,4 +1,4 @@
-﻿namespace CookIt.Web.ViewModels.Recipe
+﻿namespace CookIt.Web.BindingModels.Recipe
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -9,9 +9,9 @@
     using CookIt.Services.Mapping;
     using Microsoft.AspNetCore.Http;
 
-    public class RecipeEditViewModel : IMapFrom<Recipe>, IMapTo<Recipe>, IHaveCustomMappings, IValidatableObject
+    public class RecipeEditBindingModel : IMapFrom<Recipe>, IMapTo<Recipe>, IHaveCustomMappings, IValidatableObject
     {
-        public RecipeEditViewModel()
+        public RecipeEditBindingModel()
         {
             this.Ingredients = new List<RecipeEditIngredientBindingModel>();
         }
@@ -51,10 +51,10 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Recipe, RecipeEditViewModel>()
+            configuration.CreateMap<Recipe, RecipeEditBindingModel>()
                 .ForMember(x => x.Ingredients, opt => opt.MapFrom(c => c.RecipeIngredients));
 
-            configuration.CreateMap<RecipeEditViewModel, Recipe>()
+            configuration.CreateMap<RecipeEditBindingModel, Recipe>()
                 .ForMember(x => x.RecipeIngredients, opt => opt.MapFrom(c => c.Ingredients));
         }
 

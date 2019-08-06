@@ -5,6 +5,7 @@
 
     using CookIt.Services;
     using CookIt.Services.Data;
+    using CookIt.Web.BindingModels.Recipe;
     using CookIt.Web.ViewModels.Ingridient;
     using CookIt.Web.ViewModels.Recipe;
     using Microsoft.AspNetCore.Mvc;
@@ -125,7 +126,7 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var recipe = this.recipeService.FindRecipeById<RecipeEditViewModel>(id);
+            var recipe = this.recipeService.FindRecipeById<RecipeEditBindingModel>(id);
             var ingredients = await this.ingredientService.GetAllIngreients<AllIngredientViewModel>().ToListAsync();
             var model = new RecipeEditBaseModel { Ingredients = ingredients, InputModel = recipe };
 
@@ -161,7 +162,7 @@
             }
 
             recipeBindingModel.InputModel.Id = recipeBindingModel.Id;
-            await this.recipeService.UpdateRecipe<RecipeEditViewModel>(recipeBindingModel.InputModel, recipeBindingModel.Id);
+            await this.recipeService.UpdateRecipe<RecipeEditBindingModel>(recipeBindingModel.InputModel, recipeBindingModel.Id);
 
             // TODO: Renaming to existing name check.
             this.TempData["StatusMessage"] = string.Format(SuccessMessageEditRecipe, recipeBindingModel.InputModel.Name);

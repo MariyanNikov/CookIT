@@ -1,4 +1,4 @@
-﻿namespace CookIt.Web.ViewModels.Ingridient
+﻿namespace CookIt.Web.BindingModels.Ingredient
 {
     using System.ComponentModel.DataAnnotations;
 

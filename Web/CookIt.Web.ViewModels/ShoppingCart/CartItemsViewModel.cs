@@ -8,6 +8,8 @@
 
     public class CartItemsViewModel : IMapFrom<ShoppingCartItem>, IHaveCustomMappings
     {
+        private const string ListofIngredientsSeparator = ", ";
+
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -28,7 +30,7 @@
                 .ForMember(x => x.Image, opt => opt.MapFrom(c => c.Recipe.Image))
                 .ForMember(x => x.Price, opt => opt.MapFrom(c => c.Recipe.Price))
                 .ForMember(x => x.Portions, opt => opt.MapFrom(c => c.Recipe.Portions))
-                .ForMember(x => x.ListOfIngredients, opt => opt.MapFrom(c => string.Join(", ", c.Recipe.RecipeIngredients.Select(z => z.Ingredient.Name))));
+                .ForMember(x => x.ListOfIngredients, opt => opt.MapFrom(c => string.Join(ListofIngredientsSeparator, c.Recipe.RecipeIngredients.Select(z => z.Ingredient.Name))));
         }
     }
 }

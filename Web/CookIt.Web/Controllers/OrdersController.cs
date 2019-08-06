@@ -8,6 +8,7 @@
     using CookIt.Common;
     using CookIt.Data.Models;
     using CookIt.Services.Data;
+    using CookIt.Web.BindingModels.Order;
     using CookIt.Web.ViewModels.Order;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -39,7 +40,7 @@
                 return this.Redirect("/");
             }
 
-            var model = new CheckoutInputModel();
+            var model = new CheckoutBindingModel();
             model.FullName = this.User.FindFirstValue("FullName");
             var user = await this.userManager.GetUserAsync(this.User);
             model.PhoneNumber = await this.userManager.GetPhoneNumberAsync(user);
@@ -49,7 +50,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Checkout(CheckoutInputModel checkoutBindingModel)
+        public async Task<IActionResult> Checkout(CheckoutBindingModel checkoutBindingModel)
         {
             if (!this.ModelState.IsValid)
             {
@@ -67,7 +68,7 @@
             var shoppingCartItems = await this.shoppingCartService.CheckOutGetCartItems(userId);
             checkoutBindingModel.TotalPrice = shoppingCartItems.Sum(x => x.Recipe.Price);
 
-            await this.orderService.Checkout<CheckoutInputModel>(checkoutBindingModel, userId);
+            await this.orderService.Checkout<CheckoutBindingModel>(checkoutBindingModel, userId);
             await this.shoppingCartService.ClearShoppingCart(userId);
 
             return this.Redirect("/");

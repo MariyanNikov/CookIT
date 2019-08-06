@@ -1,4 +1,4 @@
-﻿namespace CookIt.Web.ViewModels.Recipe
+﻿namespace CookIt.Web.BindingModels.Recipe
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

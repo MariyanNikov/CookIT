@@ -1,4 +1,4 @@
-﻿namespace CookIt.Web.ViewModels.Address
+﻿namespace CookIt.Web.BindingModels.Address
 {
     using System.ComponentModel.DataAnnotations;
 

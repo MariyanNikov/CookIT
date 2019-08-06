@@ -38,6 +38,7 @@
     <ProjectReference Include="..\..\Services\CookIt.Services.Mapping\CookIt.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\CookIt.Services.Messaging\CookIt.Services.Messaging.csproj" />
     <ProjectReference Include="..\..\Services\CookIt.Services\CookIt.Services.csproj" />
+    <ProjectReference Include="..\CookIt.Web.BindingModels\CookIt.Web.BindingModels.csproj" />
     <ProjectReference Include="..\CookIt.Web.Infrastructure\CookIt.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\CookIt.Web.ViewModels\CookIt.Web.ViewModels.csproj" />
   </ItemGroup>

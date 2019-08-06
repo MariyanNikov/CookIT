@@ -1,20 +1,22 @@
-﻿namespace CookIt.Web.ViewModels.Recipe
+﻿namespace CookIt.Web.BindingModels.Recipe
 {
     using System.Collections.Generic;
 
     using CookIt.Web.ViewModels.Ingridient;
 
-    public class RecipeModel
+    public class RecipeEditBaseModel
     {
-        public RecipeModel()
+        public RecipeEditBaseModel()
         {
             this.Ingredients = new List<AllIngredientViewModel>();
         }
 
         public IList<AllIngredientViewModel> Ingredients { get; set; }
 
-        public RecipeCreateBindingModel InputModel { get; set; }
+        public RecipeEditBindingModel InputModel { get; set; }
 
         public int NumberOfIngredients { get; set; } = 1;
+
+        public int Id { get; set; }
     }
 }

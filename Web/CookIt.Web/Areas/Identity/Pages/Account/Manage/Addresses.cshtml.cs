@@ -8,6 +8,7 @@
     using CookIt.Data.Models;
     using CookIt.Services.Data;
     using CookIt.Services.Data.ApplicationUser;
+    using CookIt.Web.BindingModels.Address;
     using CookIt.Web.ViewModels.Address;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;

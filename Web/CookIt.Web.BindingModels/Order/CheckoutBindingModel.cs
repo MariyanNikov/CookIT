@@ -1,4 +1,4 @@
-﻿namespace CookIt.Web.ViewModels.Order
+﻿namespace CookIt.Web.BindingModels.Order
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@
     using CookIt.Services.Mapping;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-    public class CheckoutInputModel : IMapTo<Order>, IHaveCustomMappings, IValidatableObject
+    public class CheckoutBindingModel : IMapTo<Order>, IHaveCustomMappings, IValidatableObject
     {
         private const string ErrorMessageDeliveryDateDayAfterToday = "Delivery Date must be at least one day after the day you are placing the order.";
         private const string ErrorMessageDeliveryDatePastDates = "You cannot choose dates from the past.";
@@ -49,7 +49,7 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<CheckoutInputModel, Order>()
+            configuration.CreateMap<CheckoutBindingModel, Order>()
                  .ForMember(x => x.CommentIssuer, opt => opt.MapFrom(c => c.Comment))
                  .ForMember(x => x.FullNameIssuer, opt => opt.MapFrom(c => c.FullName));
         }

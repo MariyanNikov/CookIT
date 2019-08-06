@@ -14,6 +14,7 @@
     using CookIt.Services.Data.ApplicationUser;
     using CookIt.Services.Mapping;
     using CookIt.Services.Messaging;
+    using CookIt.Web.BindingModels.Address;
     using CookIt.Web.Infrastructure.ViewComponents;
     using CookIt.Web.ViewModels;
 
@@ -138,7 +139,7 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly, typeof(AddressBindingModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())
