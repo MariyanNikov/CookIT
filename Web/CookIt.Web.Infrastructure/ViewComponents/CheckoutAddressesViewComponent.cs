@@ -2,7 +2,7 @@
 {
     using System.Security.Claims;
 
-    using CookIt.Services.Data.ApplicationUser;
+    using CookIt.Services.Data;
     using CookIt.Web.ViewModels.Address;
     using Microsoft.AspNetCore.Mvc;
 

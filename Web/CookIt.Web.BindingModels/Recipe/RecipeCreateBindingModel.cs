@@ -16,7 +16,6 @@
             this.Ingredients = new List<RecipeIngredientBindingModel>();
         }
 
-        // TODO: add validations
         [Required]
         [StringLength(30, ErrorMessage = "The {0} field must be between {2} and {1} characters.", MinimumLength = 3)]
         [Display(Name = "Name")]

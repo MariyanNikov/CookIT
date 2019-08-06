@@ -3,13 +3,9 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using CookIt.Data.Models;
     using CookIt.Services.Data;
-    using CookIt.Services.Data.ApplicationUser;
     using CookIt.Web.ViewModels.Recipe;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
     using X.PagedList;
 
     public class HomeController : BaseController

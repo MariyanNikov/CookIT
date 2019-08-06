@@ -1,11 +1,10 @@
-﻿namespace CookIt.Services.Data.ApplicationUser
+﻿namespace CookIt.Services.Data
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using AutoMapper;
-    using CookIt.Common;
     using CookIt.Data.Common.Repositories;
     using CookIt.Data.Models;
     using CookIt.Services.Mapping;

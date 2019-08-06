@@ -8,7 +8,7 @@
 
     public class RecipeIngredientBindingModel : IMapTo<RecipeIngredient>, IValidatableObject
     {
-        [Range(1, 9999999, ErrorMessage = "You should choose a valid ingredient.")]
+        [Range(1, int.MaxValue, ErrorMessage = "You should choose a valid ingredient.")]
         public int IngredientId { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "The ingredient count must be a positive number.")]

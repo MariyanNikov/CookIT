@@ -3,6 +3,7 @@ namespace CookIt.Data.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using CookIt.Data.Common.Models;
 
@@ -37,8 +38,12 @@ namespace CookIt.Data.Models
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
         // Personal Info
+        [Required]
+        [StringLength(30, MinimumLength = 3)]
         public string FirstName { get; set; }
 
+        [Required]
+        [StringLength(30, MinimumLength = 3)]
         public string LastName { get; set; }
 
         public virtual ICollection<Address> Addresses { get; set; }

@@ -11,7 +11,6 @@
     using CookIt.Data.Seeding;
     using CookIt.Services;
     using CookIt.Services.Data;
-    using CookIt.Services.Data.ApplicationUser;
     using CookIt.Services.Mapping;
     using CookIt.Services.Messaging;
     using CookIt.Web.BindingModels.Address;

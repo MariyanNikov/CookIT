@@ -1,4 +1,4 @@
-﻿namespace CookIt.Services.Data.ApplicationUser
+﻿namespace CookIt.Services.Data
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

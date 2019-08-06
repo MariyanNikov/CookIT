@@ -4,7 +4,7 @@
 
     using CookIt.Common;
     using CookIt.Data.Models;
-    using CookIt.Services.Data.ApplicationUser;
+    using CookIt.Services.Data;
     using CookIt.Web.ViewModels.Administration;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;

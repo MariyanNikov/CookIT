@@ -1,6 +1,7 @@
 ﻿namespace CookIt.Data.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using CookIt.Data.Common.Models;
 
@@ -11,6 +12,7 @@
             this.CartItems = new HashSet<ShoppingCartItem>();
         }
 
+        [Required]
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
