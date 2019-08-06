@@ -40,6 +40,5 @@
         Task<bool> AcquiredOrder(string orderId);
 
         string GetAllRecipesInstructionsForOrder(string id);
-
     }
 }

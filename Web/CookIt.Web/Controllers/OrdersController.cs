@@ -43,7 +43,7 @@
             model.FullName = this.User.FindFirstValue("FullName");
             var user = await this.userManager.GetUserAsync(this.User);
             model.PhoneNumber = await this.userManager.GetPhoneNumberAsync(user);
-            model.DeliveryDate = DateTime.UtcNow;
+            model.DeliveryDate = DateTime.UtcNow.ToLocalTime();
 
             return this.View(model);
         }

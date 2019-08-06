@@ -1,5 +1,6 @@
 ﻿namespace CookIt.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using CookIt.Data.Models;
@@ -16,28 +17,26 @@
         private const int DefaultPageSize = 8;
         private const int DefaultPages = 1;
 
-        private readonly IApplicationUserService applicationUserService;
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IRecipeService recipeService;
 
-        public HomeController(
-            IApplicationUserService applicationUserService,
-            UserManager<ApplicationUser> userManager,
-            IRecipeService recipeService)
+        public HomeController(IRecipeService recipeService)
         {
-            this.applicationUserService = applicationUserService;
-            this.userManager = userManager;
             this.recipeService = recipeService;
         }
 
-        public async Task<IActionResult> Index(int? p)
+        public async Task<IActionResult> Index(int? p, string search)
         {
             var page = p ?? DefaultPages;
 
-            var recipes = await this.recipeService.GetAllRecipesWithoutDeleted<RecipeIndexViewModel>().ToListAsync();
+            var recipes = this.recipeService.GetAllRecipesWithoutDeleted<RecipeIndexViewModel>();
 
-            var pagedRecipes = recipes.ToPagedList(page, DefaultPageSize);
+            if (search != null)
+            {
+               recipes = recipes.Where(x => x.Name.ToLower().Contains(search.ToLower()));
+            }
 
+            var pagedRecipes = await recipes.ToPagedListAsync(page, DefaultPageSize);
+            this.ViewData["Search"] = search;
             return this.View(pagedRecipes);
         }
 

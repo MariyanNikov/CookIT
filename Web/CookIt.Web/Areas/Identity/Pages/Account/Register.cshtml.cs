@@ -67,10 +67,10 @@
                         values: new { userId = user.Id, code },
                         protocol: this.Request.Scheme);
 
-                    // await this.emailSender.SendEmailAsync(
-                    //    this.Input.Email,
-                    //    "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await this.emailSender.SendEmailAsync(
+                       this.Input.Email,
+                       "Confirm your email",
+                       $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                     await this.signInManager.SignInAsync(user, isPersistent: false);
 
                     // Creating initial shopping cart upon registration.

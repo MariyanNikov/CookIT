@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CookIt.Web.ViewModels.Recipe.RecipeBestRatingsViewModel>
+
+@foreach (var recipe in Model)
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-2">
+            <a href="/Recipes/Details/@recipe.Id">
+                <img src="@recipe.Image" alt="Not Found" width="40" height="40" />
+            </a>
+        </div>
+        <div class="col-md-5">
+            <p class="text-primary"><a href="/Recipes/Details/@recipe.Id"><b>@recipe.Name</b></a></p>
+        </div>
+        <div class="col-md-5">
+
+            @for (int i = 1; i <= 5; i++)
+            {
+                if (i < recipe.Rating + 0.99 && recipe.Rating < i && (int)recipe.Rating != 0 && (int)recipe.Rating != i)
+                {
+                    <span class="fa fa-star-half-empty checked"></span>
+                    continue;
+                }
+
+                if (recipe.Rating >= i)
+                {
+                    <span class="fa fa-star checked"></span>
+                }
+                else
+                {
+                    <span class="fa fa-star"></span>
+                }
+            }
+            <a href="/Recipes/Details/@recipe.Id">
+                <b class="h6 text-dark">@recipe.Rating.ToString("F2")</b>
+            </a>
+        </div>
+    </div>
+}

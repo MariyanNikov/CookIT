@@ -63,7 +63,6 @@
             return orders;
         }
 
-
         public OrderStatus GetOrderStatusByName(string orderStatusName)
         {
             var status = this.orderStatusRepository.All().SingleOrDefault(x => x.Name == orderStatusName);

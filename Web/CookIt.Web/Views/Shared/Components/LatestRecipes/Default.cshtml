@@ -1,0 +1,21 @@
+﻿@model IEnumerable<CookIt.Web.ViewModels.Recipe.RecipeLatestViewModel>
+
+@foreach (var recipe in Model)
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-2">
+            <a href="/Recipes/Details/@recipe.Id">
+                <img src="@recipe.Image" alt="Not Found" width="40" height="40" />
+            </a>
+        </div>
+        <div class="col-md-5">
+            <p class="text-primary"><a href="/Recipes/Details/@recipe.Id"><b>@recipe.Name</b></a></p>
+        </div>
+        <div class="col-md-5">
+            <a href="/Recipes/Details/@recipe.Id">
+                <b class="h4 text-danger">@recipe.Price.ToString("F2") <i class="fa fa-euro text-danger"></i></b>
+            </a>
+        </div>
+    </div>
+}

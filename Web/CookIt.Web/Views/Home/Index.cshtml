@@ -5,86 +5,103 @@
 @{
     this.ViewData["Title"] = "Home Page";
     var url = this.Url.Action();
+    var searchWord = this.ViewData["Search"]?.ToString();
 }
-<div >
-    <div class="row">
-
-        <div class="col-9">
-            <div class="row d-flex justify-content-around">
-                @foreach (var recipe in Model)
-                {
-                    <div class="col-md-3 mt-3">
-                        <div class="card h-100 " style="width: 18rem; background: #eee">
-                            <a href="/Recipes/Details/@recipe.Id">
-                                <img class="card-img-top" src="@recipe.Image" alt="Not Found" height="150">
-                            </a>
+@if (searchWord != null)
+{
+    <div class="h3 d-flex justify-content-start">
+        Results for "@searchWord" :
+    </div>
+}
+<div class="row">
+    <div class="col-9">
+        <div class="row d-flex justify-content-around">
+            @foreach (var recipe in Model)
+            {
+                <div class="col-md-3 mt-3">
+                    <div class="card h-100 " style="width: 18rem; background: #eee">
+                        <a href="/Recipes/Details/@recipe.Id">
+                            <img class="card-img-top" src="@recipe.Image" alt="Not Found" height="150">
+                        </a>
+                        <div class="card-body">
+                            <a href="/Recipes/Details/@recipe.Id" class="card-title h5">@recipe.Name</a>
+                            <p class="card-text">@recipe.Description</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item font-italic centered" style="background: #eee"><b>Required Ingrediets:</b> <a href="/Recipes/Details/@recipe.Id"><i class="h5 text-success">@recipe.RequiredIngredients</i> <i class="fa fa-leaf text-success"></i></a></li>
+                            <li class="list-group-item centered" style="background: #eee"><b>Published Reviews:</b> <a href="/Recipes/Details/@recipe.Id"><i class="h5 text-primary">@recipe.ReviewsCount</i> <i class="fa fa-pencil text-primary"></i></a></li>
+                            <li class="list-group-item centered" style="background: #eee"><b>Price:</b> <i class="h3 text-danger">@recipe.Price</i> <i class="fa fa-euro text-danger fa-2x"></i></li>
+                        </ul>
+                        <div class="align-text-bottom">
                             <div class="card-body">
-                                <a href="/Recipes/Details/@recipe.Id" class="card-title h5">@recipe.Name</a>
-                                <p class="card-text">@recipe.Description</p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item font-italic centered" style="background: #eee"><b>Required Ingrediets:</b> <a href="/Recipes/Details/@recipe.Id"><i class="h5 text-success">@recipe.RequiredIngredients</i> <i class="fa fa-leaf text-success"></i></a></li>
-                                <li class="list-group-item centered" style="background: #eee"><b>Published Reviews:</b> <a href="/Recipes/Details/@recipe.Id"><i class="h5 text-primary">@recipe.ReviewsCount</i> <i class="fa fa-pencil text-primary"></i></a></li>
-                                <li class="list-group-item centered" style="background: #eee"><b>Price:</b> <i class="h3 text-danger">@recipe.Price</i> <i class="fa fa-euro text-danger fa-2x"></i></li>
-                            </ul>
-                            <div class="align-text-bottom">
-                                <div class="card-body">
-                                    <div class="row justify-content-center">
-                                        <a href="/Recipes/Details/@recipe.Id" class="btn btn-success">Details</a>
-                                        <form method="post" asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@recipe.Id">
-                                            <button type="submit" class="btn btn-primary ml-2">Add to Cart <i class="fa fa-cart-plus"></i></button>
-                                        </form>
-                                    </div>
+                                <div class="row justify-content-center">
+                                    <a href="/Recipes/Details/@recipe.Id" class="btn btn-success">Details</a>
+                                    <form method="post" asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@recipe.Id">
+                                        <button type="submit" class="btn btn-primary ml-2">Add to Cart <i class="fa fa-cart-plus"></i></button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                }
-                @if (Model.Count % 4 != 0)
+            }
+            @if (Model.Count % 4 != 0)
+            {
+                @for (int i = 0; i < 4 - Model.Count % 4; i++)
                 {
-                    @for (int i = 0; i < 4 - Model.Count % 4; i++)
-                    {
-                        <div class="col-md-3 mt-3 empty"></div>
-                    }
+                    <div class="col-md-3 mt-3 empty"></div>
                 }
+            }
+            @if (Model.Count == 0)
+            {
+                <div class="alert alert-primary col-md-12 centered mt-3" role="alert">
+                    No recipes found for this search: "@searchWord"
+                </div>
+            }
 
-            </div>
-            <div class="row d-flex justify-content-center mt-4">
-                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
-                                                                                new
-                                                                                {
-                                                                                    p = page
-                                                                                }),
-                                                                                new PagedListRenderOptionsBase
-                                                                                {
-                                                                                    MaximumPageNumbersToDisplay = 5,
-                                                                                    LiElementClasses = new string[] { "page-item" },
-                                                                                    PageClasses = new string[] { "page-link" }
-                                                                                })
-            </div>
 
         </div>
-        <div class="col-3">
-            <div class="d-flex centered">
-                <div class="card col-md-12" style="width: 18rem;">
-                    <img class="card-img-top" src="https://res.cloudinary.com/cookitproject/image/upload/v1564184360/recipe_images/rf6vvmebi0ngsdllv1xr.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
-                    </ul>
-                    <div class="card-body">
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                    </div>
+        <div class="row d-flex justify-content-center mt-4">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index",
+                                                                            new
+                                                                            {
+                                                                                p = page,
+                                                                                search = searchWord
+                                                                            }),
+                                                                            new PagedListRenderOptionsBase
+                                                                            {
+                                                                                MaximumPageNumbersToDisplay = 5,
+                                                                                LiElementClasses = new string[] { "page-item" },
+                                                                                PageClasses = new string[] { "page-link" }
+                                                                            })
+        </div>
+
+    </div>
+    <div class="col-3 mt-3">
+        <div class="d-flex centered">
+            <div class="card col-md-12" style="width: 18rem;">
+                <div class="h3 d-flex justify-content-center m-2">
+                    <p style="font-family:'Montserrat', sans-serif;text-transform:uppercase"><b>Best Ratings</b></p>
+                </div>
+                <div class="mb-3">
+                    <cache expires-after="@TimeSpan.FromSeconds(300)">
+                        <vc:best-ratings amount-of-recipes="5" />
+                    </cache>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex centered mt-3">
+            <div class="card col-md-12" style="width: 18rem;">
+                <div class="h3 d-flex justify-content-center m-2">
+                    <p style="font-family:'Montserrat', sans-serif;text-transform:uppercase"><b>Latest Recipes</b></p>
+                </div>
+                <div class="mb-3">
+                    <cache expires-after="@TimeSpan.FromSeconds(300)">
+                        <vc:latest-recipes amount-of-recipes="5" />
+                    </cache>
                 </div>
             </div>
         </div>
     </div>
 </div>
-    

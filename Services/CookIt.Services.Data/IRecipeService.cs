@@ -26,5 +26,9 @@
         IQueryable<TModel> GetAllRecipesWithoutDeleted<TModel>();
 
         TModel GetRecipeWithoutDeleted<TModel>(int id);
+
+        IQueryable<TModel> GetHighestRatingsRecipes<TModel>();
+
+        IQueryable<TModel> GetLatestRecipes<TModel>();
     }
 }

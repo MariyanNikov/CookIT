@@ -1,14 +1,13 @@
 ﻿namespace CookIt.Web.Areas.Administration.Controllers
 {
     using System.Linq;
-    using System.Security.Claims;
     using System.Threading.Tasks;
+
     using CookIt.Common;
     using CookIt.Services.Data;
     using CookIt.Web.ViewModels.Order;
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
     using X.PagedList;
 
     public class OrdersController : AdministrationController

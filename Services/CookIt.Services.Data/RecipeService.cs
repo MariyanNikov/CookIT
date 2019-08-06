@@ -107,5 +107,19 @@
 
             return recipe;
         }
+
+        public IQueryable<TModel> GetHighestRatingsRecipes<TModel>()
+        {
+            var recipes = this.recipeRepository.All().Where(x => x.Reviews.Any()).OrderByDescending(c => (c.Reviews.Sum(z => z.Stars) * 1.0) / c.Reviews.Count).To<TModel>();
+
+            return recipes;
+        }
+
+        public IQueryable<TModel> GetLatestRecipes<TModel>()
+        {
+            var recipes = this.recipeRepository.All().OrderByDescending(x => x.Id).To<TModel>();
+
+            return recipes;
+        }
     }
 }
