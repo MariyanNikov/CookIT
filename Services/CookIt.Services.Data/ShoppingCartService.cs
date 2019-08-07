@@ -65,8 +65,14 @@
             return cartItems;
         }
 
-        public int GetShoppingCartItemsCount(string userId)
+        public async Task<int> GetShoppingCartItemsCount(string userId)
         {
+            var cart = this.shoppingCartRepository.All().SingleOrDefault(x => x.ApplicationUserId == userId);
+            if (cart == null)
+            {
+                await this.CreateShoppingCart(userId);
+            }
+
             var cartItemsCount = this.shoppingCartRepository.All().Include(x => x.CartItems).SingleOrDefault(x => x.ApplicationUserId == userId).CartItems.Count();
 
             return cartItemsCount;

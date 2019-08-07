@@ -8,7 +8,7 @@
 
     public interface IShoppingCartService
     {
-        int GetShoppingCartItemsCount(string userId);
+        Task<int> GetShoppingCartItemsCount(string userId);
 
         Task<bool> CreateShoppingCart(string userId);
 

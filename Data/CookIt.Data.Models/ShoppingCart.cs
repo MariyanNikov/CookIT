@@ -12,7 +12,6 @@
             this.CartItems = new HashSet<ShoppingCartItem>();
         }
 
-        [Required]
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
