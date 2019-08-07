@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\CookIt.Data\CookIt.Data.csproj" />
     <ProjectReference Include="..\..\Services\CookIt.Services.Data\CookIt.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Web\CookIt.Web.BindingModels\CookIt.Web.BindingModels.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿namespace CookIt.Data.Migrations
 {
     using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class Removed_FK_COnstraint : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
