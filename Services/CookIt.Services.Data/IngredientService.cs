@@ -129,9 +129,9 @@
             return true;
         }
 
-        public async Task<bool> CheckExistingIngredientId(ICollection<int> ingredientIds)
+        public bool CheckExistingIngredientId(ICollection<int> ingredientIds)
         {
-            var ingredients = await this.ingredientRepository.All().Where(x => ingredientIds.Any(id => x.Id == id)).ToListAsync();
+            var ingredients = this.ingredientRepository.All().Where(x => ingredientIds.Any(id => x.Id == id)).ToList();
             if (ingredientIds.Count == ingredients.Count)
             {
                 return true;

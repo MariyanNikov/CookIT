@@ -57,7 +57,7 @@
                 return this.View(recipeBindingModel);
             }
 
-            bool areAllIdsValid = await this.ingredientService.CheckExistingIngredientId(
+            bool areAllIdsValid = this.ingredientService.CheckExistingIngredientId(
                 recipeBindingModel.InputModel.Ingredients
                 .Select(x => x.IngredientId).ToList());
 
@@ -143,7 +143,7 @@
                 return this.View(recipeBindingModel);
             }
 
-            bool areAllIdsValid = await this.ingredientService.CheckExistingIngredientId(
+            bool areAllIdsValid = this.ingredientService.CheckExistingIngredientId(
                 recipeBindingModel.InputModel.Ingredients
                 .Select(x => x.IngredientId).ToList());
 

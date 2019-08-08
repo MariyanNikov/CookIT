@@ -21,11 +21,14 @@
 
     public class ApplicationUserServiceTests
     {
+        public ApplicationUserServiceTests()
+        {
+            MapperInitialize.Initialize();
+        }
 
         [Fact]
         public async Task AddAddressShouldAddAddressCorectly()
         {
-            this.InitializeMapper();
             var addressRepository = new Mock<IRepository<Address>>();
             var userRepository = new Mock<IRepository<ApplicationUser>>();
             var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
@@ -48,7 +51,6 @@
 
         public void GetAllAddressesByUserWithDataShouldReturnCorrectResults()
         {
-            this.InitializeMapper();
             var addressRepository = new Mock<IRepository<Address>>();
             var userRepository = new Mock<IRepository<ApplicationUser>>();
             var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
@@ -76,7 +78,6 @@
         [Fact]
         public void GetAllAddressesByUserWithOutDataShouldReturnEmptyCollection()
         {
-            this.InitializeMapper();
             var addressRepository = new Mock<IRepository<Address>>();
             var userRepository = new Mock<IRepository<ApplicationUser>>();
             var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
@@ -91,7 +92,6 @@
         [Fact]
         public async Task RemoveAddressShouldCorrectlyRemoveAddressById()
         {
-            this.InitializeMapper();
             var addressRepository = new Mock<IRepository<Address>>();
             var userRepository = new Mock<IRepository<ApplicationUser>>();
             var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
@@ -108,7 +108,6 @@
         [Fact]
         public async Task GetUsersByRoleNameShouldReturnCorrectData()
         {
-            this.InitializeMapper();
             var addressRepository = new Mock<IRepository<Address>>();
             var userRepository = new Mock<IRepository<ApplicationUser>>();
             var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
@@ -118,13 +117,6 @@
             var result = await service.GetUsersByRoleName<AdminViewModel>(GlobalConstants.AdministratorRoleName);
 
             userManager.Verify(x => x.GetUsersInRoleAsync(GlobalConstants.AdministratorRoleName), Times.Once, "Getting Users by Role does not work properly.");
-        }
-
-        private void InitializeMapper()
-        {
-            AutoMapperConfig.RegisterMappings(
-                typeof(ErrorViewModel).GetTypeInfo().Assembly,
-                typeof(AddressBindingModel).GetTypeInfo().Assembly);
         }
 
         private IEnumerable<ApplicationUser> DummyDataForUser()
