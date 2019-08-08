@@ -60,7 +60,7 @@
         {
             var ingredientFromDb = this.ingredientTypeRepository.All().SingleOrDefault(x => x.Id == id);
 
-            return ingredientFromDb.Name;
+            return ingredientFromDb?.Name;
         }
 
         public IQueryable<TModel> GetAllIngreientTypes<TModel>()
@@ -100,7 +100,7 @@
         {
             var ingredientFromDb = this.ingredientRepository.All().SingleOrDefault(x => x.Id == id);
 
-            return ingredientFromDb.Name;
+            return ingredientFromDb?.Name;
         }
 
         public bool IngredientExistsByName(string name)

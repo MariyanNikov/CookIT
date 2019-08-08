@@ -21,6 +21,7 @@
 
     public class ApplicationUserServiceTests
     {
+
         [Fact]
         public async Task AddAddressShouldAddAddressCorectly()
         {
@@ -45,7 +46,7 @@
 
         [Fact]
 
-        public void GetAllAddressesByUserShouldReturnCorrectResults()
+        public void GetAllAddressesByUserWithDataShouldReturnCorrectResults()
         {
             this.InitializeMapper();
             var addressRepository = new Mock<IRepository<Address>>();
@@ -70,6 +71,21 @@
                 Assert.True(expectedEntry.CityCode == actualEntry.CityCode, "CityCode does not match");
                 Assert.True(expectedEntry.StreetAddress == actualEntry.StreetAddress, "StreetAddress does not match");
             }
+        }
+
+        [Fact]
+        public void GetAllAddressesByUserWithOutDataShouldReturnEmptyCollection()
+        {
+            this.InitializeMapper();
+            var addressRepository = new Mock<IRepository<Address>>();
+            var userRepository = new Mock<IRepository<ApplicationUser>>();
+            var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
+            var userManager = new Mock<UserManager<ApplicationUser>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
+            var service = new ApplicationUserService(userRepository.Object, addressRepository.Object, userManager.Object);
+
+            var actualAddresses = service.GetAllAddresses<AddressViewModel>("1").ToList();
+
+            Assert.True(actualAddresses.Count == 0, "Get All Addresses does not return empty collection without data.");
         }
 
         [Fact]
@@ -106,7 +122,9 @@
 
         private void InitializeMapper()
         {
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly, typeof(AddressBindingModel).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings(
+                typeof(ErrorViewModel).GetTypeInfo().Assembly,
+                typeof(AddressBindingModel).GetTypeInfo().Assembly);
         }
 
         private IEnumerable<ApplicationUser> DummyDataForUser()
