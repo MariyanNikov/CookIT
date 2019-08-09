@@ -29,6 +29,11 @@
         {
             var recipe = this.recipeService.GetRecipeWithoutDeleted<RecipeDetailsViewModel>(id);
 
+            if (recipe == null)
+            {
+                return this.Redirect("/");
+            }
+
             var userId = this.userManager.GetUserId(this.User);
             recipe.HasReviewed = this.reviewService.HasReviewedRecipeByUserId(id, userId);
 

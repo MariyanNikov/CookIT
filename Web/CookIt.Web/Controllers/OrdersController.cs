@@ -87,6 +87,10 @@
             }
 
             var order = await this.orderService.FindOrderById<OrderDetailsViewModel>(id).SingleOrDefaultAsync();
+            if (order == null)
+            {
+                return this.Redirect("/");
+            }
 
             return this.View(order);
         }
