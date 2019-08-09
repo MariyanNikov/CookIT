@@ -75,7 +75,7 @@ $(function () {
         event.preventDefault();
 
         let numberOfIngredients = $('#numberOfIngredients').val();
-        if (numberOfIngredients >= 10) {
+        if (numberOfIngredients >= 20) {
 
             $('#errorMessage').first().show();
             return;

@@ -61,7 +61,7 @@
                 <span id="validationIngredientsWeight" asp-validation-for="InputModel.Ingredients[i].Weight" class="text-danger"></span>
                 <div id="ingredientRow" class="row ml-0">
                     <select id="ingredientsSelect" type="text" class="form-control w-25 col align-self-start" asp-for="InputModel.Ingredients[i].IngredientId">
-                        <option selected disabled value="0">--- Select Ingredient Type ---</option>
+                        <option selected disabled value="0">--- Select Ingredient ---</option>
                         @for (int j = 0; j < Model.Ingredients.Count; j++)
                         {
                             <option value="@Model.Ingredients[j].Id">@Model.Ingredients[j].Name</option>
