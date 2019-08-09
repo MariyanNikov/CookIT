@@ -65,9 +65,10 @@
 
             checkoutBindingModel.IssuedOn = DateTime.UtcNow;
 
-            var shoppingCartItems = await this.shoppingCartService.CheckOutGetCartItems(userId);
-            checkoutBindingModel.TotalPrice = shoppingCartItems.Sum(x => x.Recipe.Price);
+            // var shoppingCartItems = await this.shoppingCartService.CheckOutGetCartItems(userId);
+            checkoutBindingModel.TotalPrice = this.shoppingCartService.GetPriceOfAllShoppingCartItemsByUserId(userId);
 
+            // shoppingCartItems.Sum(x => x.Recipe.Price);
             await this.orderService.Checkout<CheckoutBindingModel>(checkoutBindingModel, userId);
             await this.shoppingCartService.ClearShoppingCart(userId);
 

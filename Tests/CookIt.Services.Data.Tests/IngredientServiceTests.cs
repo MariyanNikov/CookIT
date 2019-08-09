@@ -2,20 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using System.Threading.Tasks;
 
-    using CookIt.Common;
     using CookIt.Data.Common.Repositories;
     using CookIt.Data.Models;
-    using CookIt.Services.Mapping;
-    using CookIt.Web.BindingModels.Address;
     using CookIt.Web.BindingModels.Ingredient;
-    using CookIt.Web.ViewModels;
-    using CookIt.Web.ViewModels.Address;
-    using CookIt.Web.ViewModels.Administration;
     using CookIt.Web.ViewModels.Ingridient;
-    using Microsoft.AspNetCore.Identity;
 
     using Moq;
 

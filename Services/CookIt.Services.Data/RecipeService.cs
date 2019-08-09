@@ -75,12 +75,6 @@
             return recipe.SingleOrDefault();
         }
 
-        public IQueryable<TModel> GetAllRecipeIngredients<TModel>()
-        {
-            var ingredients = this.recipeIngredientRepository.All().To<TModel>();
-            return ingredients;
-        }
-
         public async Task<bool> UpdateRecipe<TModel>(TModel recipe, int recipeId)
         {
             var recipeIngredients = this.recipeIngredientRepository.AllAsNoTracking().Where(x => x.RecipeId == recipeId).ToList();

@@ -47,7 +47,7 @@
         {
             var orderForDb = Mapper.Map<Order>(order);
 
-            var shoppingCartItems = await this.shoppingCartService.CheckOutGetCartItems(issuerId);
+            var shoppingCartItems = this.shoppingCartService.CheckOutGetCartItems(issuerId);
             var recipes = shoppingCartItems.Select(x => new OrderRecipe { RecipeId = x.RecipeId }).ToList();
             orderForDb.OrderRecipes = recipes;
 

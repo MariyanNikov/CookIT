@@ -30,11 +30,20 @@
             return true;
         }
 
-        public async Task<ICollection<ShoppingCartItem>> CheckOutGetCartItems(string userId)
+        public decimal GetPriceOfAllShoppingCartItemsByUserId(string userId)
         {
             var cartId = this.shoppingCartRepository.All().SingleOrDefault(x => x.ApplicationUserId == userId).Id;
 
-            var cartItems = await this.shoppingCartItemsRepository.All().Include(x => x.Recipe).Where(x => x.ShoppingCartId == cartId).ToListAsync();
+            var cartItems = this.shoppingCartItemsRepository.All().Include(x => x.Recipe).Where(x => x.ShoppingCartId == cartId).ToList();
+
+            return cartItems.Sum(x => x.Recipe.Price);
+        }
+
+        public ICollection<ShoppingCartItem> CheckOutGetCartItems(string userId)
+        {
+            var cartId = this.shoppingCartRepository.All().SingleOrDefault(x => x.ApplicationUserId == userId).Id;
+
+            var cartItems = this.shoppingCartItemsRepository.All().Include(x => x.Recipe).Where(x => x.ShoppingCartId == cartId).ToList();
 
             return cartItems;
         }

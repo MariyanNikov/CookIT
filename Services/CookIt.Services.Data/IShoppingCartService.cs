@@ -12,6 +12,8 @@
 
         Task<bool> CreateShoppingCart(string userId);
 
+        decimal GetPriceOfAllShoppingCartItemsByUserId(string userId);
+
         Task<bool> AddShoppingCartItem(string userId, int recipeId);
 
         Task<bool> RemoveShoppingCartItem(string userId, int recipeId);
@@ -24,6 +26,6 @@
 
         bool HasItemsInCart(string userId);
 
-        Task<ICollection<ShoppingCartItem>> CheckOutGetCartItems(string userId);
+        ICollection<ShoppingCartItem> CheckOutGetCartItems(string userId);
     }
 }
