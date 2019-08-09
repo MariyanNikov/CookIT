@@ -243,7 +243,7 @@
             },
             };
 
-            return new List<ShoppingCart> { cart , new ShoppingCart { ApplicationUserId = "2" , Id = 2 } };
+            return new List<ShoppingCart> { cart, new ShoppingCart { ApplicationUserId = "2", Id = 2 } };
         }
 
         private List<ShoppingCartItem> DummyDataShoppingCartItems()

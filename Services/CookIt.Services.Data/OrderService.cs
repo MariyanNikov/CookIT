@@ -31,18 +31,6 @@
             this.orderRecipeRepository = orderRecipeRepository;
         }
 
-        public async Task<bool> AddOrderStatus(OrderStatus status)
-        {
-            if (this.GetOrderStatusByName(status.Name) != null)
-            {
-                return false;
-            }
-
-            await this.orderStatusRepository.AddAsync(status);
-            await this.orderStatusRepository.SaveChangesAsync();
-            return true;
-        }
-
         public async Task<bool> Checkout<TModel>(TModel order, string issuerId)
         {
             var orderForDb = Mapper.Map<Order>(order);
@@ -61,6 +49,13 @@
             var orders = this.orderRepository.All().To<TModel>();
 
             return orders;
+        }
+
+        public int GetOrderStatusIdByName(string orderStatusName)
+        {
+            var statusId = this.orderStatusRepository.All().SingleOrDefault(x => x.Name == orderStatusName).Id;
+
+            return statusId;
         }
 
         public OrderStatus GetOrderStatusByName(string orderStatusName)

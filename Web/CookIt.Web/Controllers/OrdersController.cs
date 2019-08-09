@@ -60,8 +60,8 @@
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             checkoutBindingModel.IssuerId = userId;
 
-            var pendingStatus = this.orderService.GetOrderStatusByName(GlobalConstants.PendingOrderStatus);
-            checkoutBindingModel.OrderStatusId = pendingStatus.Id;
+            // var pendingStatus = this.orderService.GetOrderStatusByName(GlobalConstants.PendingOrderStatus);
+            checkoutBindingModel.OrderStatusId = this.orderService.GetOrderStatusIdByName(GlobalConstants.PendingOrderStatus);
 
             checkoutBindingModel.IssuedOn = DateTime.UtcNow;
 

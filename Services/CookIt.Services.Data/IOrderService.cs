@@ -9,6 +9,8 @@
     {
         Task<bool> Checkout<TModel>(TModel order, string issuerId);
 
+        int GetOrderStatusIdByName(string orderStatusName);
+
         OrderStatus GetOrderStatusByName(string orderStatusName);
 
         Task<bool> ConfirmOrder(string orderId);
