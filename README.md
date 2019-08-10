@@ -3,7 +3,9 @@
 # LIVE DEMO - [cookityourself.azurewebsites.net](https://cookityourself.azurewebsites.net/)
  
 # Project - CookIt
- 
+
+![](https://cookityourself.azurewebsites.net/img/logo.png)
+
 ## Type - Web Store
  
 ## Description
